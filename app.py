@@ -24,7 +24,8 @@ token_telegram = "TELEGRAM_APY_TOKEN"
 #TOKEN GOOGLE SHEETS API #ARQUIVO OCULTO NA RAIZ
 
 token_google_sheets = os.environ['TOKEN_GOOGLE_SHEETS']
-
+with open("credenciais.json", mode="w") as fobj:
+  fobj.write(token_google_sheets)
 
 #TOKEN_CHAT_GPT #TOKEN_CHATGPT
 token_chatgpt = 'TOKEN_CHATGPT'
@@ -47,7 +48,8 @@ scopes = [
     'https://www.googleapis.com/auth/spreadsheets',
     'https://www.googleapis.com/auth/drive'
 ]
-gs_credenciais = ServiceAccountCredentials.from_json_keyfile_dict(token_google_sheets,  scopes)
+
+gs_credenciais = ServiceAccountCredentials.from_json_keyfile_name("credenciais.json")
 cliente = gspread.authorize(gs_credenciais)
 
 #ABRINDO A PLANILHA
