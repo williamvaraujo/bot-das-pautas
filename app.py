@@ -19,18 +19,11 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 #TOKEN TELEGRAM #TELEGRAM_APY_TOKEN
 token_telegram = "TELEGRAM_APY_TOKEN" 
-#token_telegram = os.environ["TELEGRAM_APY_TOKEN"]
+
 
 #TOKEN GOOGLE SHEETS API #ARQUIVO OCULTO NA RAIZ
 
-#****************
-#TOKEN_GOOGLE_SHEETS = '/etc/secrets/robo-criador-de-pautas-2448f73f5c63.json'
-#token_google_sheets = service_account.Credentials.from_service_account_file('robo-criador-de-pautas-2448f73f5c63.json')
-
-token_google_sheets = os.environ["TOKEN_GOOGLE_SHEETS"]
-with open("robo-criador-de-pautas-2448f73f5c63.json", mode="w") as fobj:
-  fobj.write(token_google_sheets)
-#****************
+token_google_sheets = os.environ['TOKEN_GOOGLE_SHEETS']
 
 
 #TOKEN_CHAT_GPT #TOKEN_CHATGPT
@@ -54,7 +47,7 @@ scopes = [
     'https://www.googleapis.com/auth/spreadsheets',
     'https://www.googleapis.com/auth/drive'
 ]
-gs_credenciais = ServiceAccountCredentials.from_json_keyfile_name('robo-criador-de-pautas-2448f73f5c63.json',scopes=scopes)
+gs_credenciais = ServiceAccountCredentials.from_json(token_google_sheets,scopes=scopes)
 cliente = gspread.authorize(gs_credenciais)
 
 #ABRINDO A PLANILHA
