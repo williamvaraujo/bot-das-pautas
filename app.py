@@ -47,7 +47,7 @@ scopes = [
     'https://www.googleapis.com/auth/spreadsheets',
     'https://www.googleapis.com/auth/drive'
 ]
-gs_credenciais = ServiceAccountCredentials.from_json(token_google_sheets)
+gs_credenciais = ServiceAccountCredentials.from_json_keyfile_dict(token_google_sheets,  scopes)
 cliente = gspread.authorize(gs_credenciais)
 
 #ABRINDO A PLANILHA
