@@ -6,7 +6,6 @@ import gspread
 import json
 import re
 import time
-import os
 import smtplib
 from email.message import EmailMessage
 from datetime import datetime
