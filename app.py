@@ -5,7 +5,8 @@ import requests
 import gspread
 import json
 import re
-import time 
+import time
+import os
 import smtplib
 from email.message import EmailMessage
 from datetime import datetime
@@ -18,10 +19,12 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 #TOKEN TELEGRAM #TELEGRAM_APY_TOKEN
 token_telegram = "TELEGRAM_APY_TOKEN" 
+#token_telegram = os.environ["TELEGRAM_APY_TOKEN"]
 
 #TOKEN GOOGLE SHEETS API #ARQUIVO OCULTO NA RAIZ
 #TOKEN_GOOGLE_SHEETS = '/etc/secrets/robo-criador-de-pautas-2448f73f5c63.json'
-token_google_sheets = service_account.Credentials.from_service_account_file('TOKEN_GOOGLE_SHEETS')
+token_google_sheets = service_account.Credentials.from_service_account_file('robo-criador-de-pautas-2448f73f5c63.json')
+
 
 #TOKEN_CHAT_GPT #TOKEN_CHATGPT
 token_chatgpt = 'TOKEN_CHATGPT'
@@ -44,7 +47,7 @@ scopes = [
     'https://www.googleapis.com/auth/spreadsheets',
     'https://www.googleapis.com/auth/drive'
 ]
-gs_credenciais = ServiceAccountCredentials.from_json_keyfile_name('TOKEN_GOOGLE_SHEETS',scopes=scopes)
+gs_credenciais = ServiceAccountCredentials.from_json_keyfile_name('robo-criador-de-pautas-2448f73f5c63.json',scopes=scopes)
 cliente = gspread.authorize(gs_credenciais)
 
 #ABRINDO A PLANILHA
