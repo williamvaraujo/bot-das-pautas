@@ -20,7 +20,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 token_telegram = "TELEGRAM_APY_TOKEN" 
 
 #TOKEN GOOGLE SHEETS API #ARQUIVO OCULTO NA RAIZ
-TOKEN_GOOGLE_SHEETS = '/etc/secrets/robo-criador-de-pautas-2448f73f5c63.json'
+#TOKEN_GOOGLE_SHEETS = '/etc/secrets/robo-criador-de-pautas-2448f73f5c63.json'
 token_google_sheets = service_account.Credentials.from_service_account_file('TOKEN_GOOGLE_SHEETS')
 
 #TOKEN_CHAT_GPT #TOKEN_CHATGPT
