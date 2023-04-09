@@ -9,4 +9,3 @@ gspread
 secure-smtplib
 datetime
 oauth2client
-os
