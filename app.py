@@ -20,7 +20,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 token_telegram = "TELEGRAM_APY_TOKEN" 
 
 #TOKEN GOOGLE SHEETS API #ARQUIVO OCULTO NA RAIZ
-token_google_sheets = service_account.Credentials.from_service_account_file('robo-criador-de-pautas-2448f73f5c63.json')
+token_google_sheets = service_account.Credentials.from_service_account_file('TOKEN_GOOGLE_SHEETS.json')
 
 #TOKEN_CHAT_GPT #TOKEN_CHATGPT
 token_chatgpt = 'TOKEN_CHATGPT'
@@ -43,7 +43,7 @@ scopes = [
     'https://www.googleapis.com/auth/spreadsheets',
     'https://www.googleapis.com/auth/drive'
 ]
-gs_credenciais = ServiceAccountCredentials.from_json_keyfile_name('robo-criador-de-pautas-2448f73f5c63.json',scopes=scopes)
+gs_credenciais = ServiceAccountCredentials.from_json_keyfile_name('TOKEN_GOOGLE_SHEETS',scopes=scopes)
 cliente = gspread.authorize(gs_credenciais)
 
 #ABRINDO A PLANILHA
