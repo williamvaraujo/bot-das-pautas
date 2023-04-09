@@ -5,6 +5,7 @@ import requests
 import gspread
 import json
 import re
+import os
 import time
 import smtplib
 from email.message import EmailMessage
@@ -21,8 +22,15 @@ token_telegram = "TELEGRAM_APY_TOKEN"
 #token_telegram = os.environ["TELEGRAM_APY_TOKEN"]
 
 #TOKEN GOOGLE SHEETS API #ARQUIVO OCULTO NA RAIZ
+
+****************
 #TOKEN_GOOGLE_SHEETS = '/etc/secrets/robo-criador-de-pautas-2448f73f5c63.json'
-token_google_sheets = service_account.Credentials.from_service_account_file('robo-criador-de-pautas-2448f73f5c63.json')
+#token_google_sheets = service_account.Credentials.from_service_account_file('robo-criador-de-pautas-2448f73f5c63.json')
+
+token_google_sheets = os.environ["TOKEN_GOOGLE_SHEETS"]
+with open("robo-criador-de-pautas-2448f73f5c63.json", mode="w") as fobj:
+  fobj.write(token_google_sheets)
+****************
 
 
 #TOKEN_CHAT_GPT #TOKEN_CHATGPT
