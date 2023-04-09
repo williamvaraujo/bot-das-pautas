@@ -1,7 +1,20 @@
-import os
+#Importando as bibliotecas para iniciar o projeto
+
 import requests
-from flask import Flask
-from tchan import ChannelScraper
+import gspread
+import json
+import re
+import time 
+import smtplib
+from email.message import EmailMessage
+from datetime import datetime
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
+from oauth2client.service_account import ServiceAccountCredentials
+
+
+
+
 
 TELEGRAM_API_KEY = os.environ["TELEGRAM_API_KEY"]
 TELEGRAM_ADMIN_ID = os.environ["TELEGRAM_ADMIN_ID"]
