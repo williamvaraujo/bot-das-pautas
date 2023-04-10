@@ -104,7 +104,7 @@ def bot_das_pautas():
     print(ultima_mensagem)
     print(chat_id)
     print(nome_usuario)
-    
+    resposta = "Não foi digitada uma mensagem correta"
 
 #---------------------------------------------------------------------------- /START --> RESPOSTA1
     if ultima_mensagem == "/start":
