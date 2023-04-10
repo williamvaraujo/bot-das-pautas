@@ -106,13 +106,13 @@ offset = 0
 #FUNÇÃO DE FUNCIONAMENTO DO BOT
 
 def cria_pautas(mensagem):
-    ultima_mensagem = mensagem['message']['text']    #[-1]['message']['text']
-
+    ultima_mensagem = mensagem['message']['text']
+    chat_id = primeira_mensagem['message']['chat']['id']
 #---------------------------------------------------------------------------- /START --> RESPOSTA1
     if  ultima_mensagem.startswith("/") and ultima_mensagem == '/start':
         nome_usuario = mensagem['message']['from']['first_name']
         update_id = mensagem['update_id']
-        
+        chat_id = primeira_mensagem['message']['chat']['id']
         #MENSAGEM DE BOAS-VINDAS E ORIENTAÇÃO
         orientacao = f'''
 Olá, {nome_usuario}, tudo bem?
@@ -143,6 +143,10 @@ Será um prazer ajudar.
 #---------------------------------------------------------------------------/CONTINUAR --> RESPOSTA2
         
     if ultima_mensagem.startswith("/") and ultima_mensagem == '/continuar':
+        nome_usuario = mensagem['message']['from']['first_name']
+        update_id = mensagem['update_id']
+        chat_id = primeira_mensagem['message']['chat']['id']      
+      
         #ORIENTAÇÕES PARA CONSTRUÇÃO DO ASSUNTO
         assunto = f'''
 Vamos lá. 
@@ -170,6 +174,9 @@ OBSERVAÇÃO: quanto mais informação, mais assertiva a pauta. Por isso, seja c
 
         if not ultima_mensagem.startswith("/"):
 
+            nome_usuario = mensagem['message']['from']['first_name']
+            update_id = mensagem['update_id']
+            chat_id = primeira_mensagem['message']['chat']['id']
             print('É um assunto com link e chegou no CHATGPT***********')
 
             recebido = f'''
@@ -239,6 +246,10 @@ Clique para responder:
                 #IDENTAÇÃO
             if ultima_mensagem.startswith("/") and ultima_mensagem == '/Sim':
 
+                nome_usuario = mensagem['message']['from']['first_name']
+                update_id = mensagem['update_id']
+                chat_id = primeira_mensagem['message']['chat']['id']
+                
                 print('A etapa do sim deu certo e podemos continuar com e-mail')
 
                 #CADASTRANDO A PAUTA NA PLANILHA
@@ -264,7 +275,10 @@ FIQUE ATENTO: caso você não envie um e-mail válido e um assunto em menos de 3
                 requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta4)  
 
                 if parse_email_subject(ultima_mensagem):
-                    #
+                    
+                    nome_usuario = mensagem['message']['from']['first_name']
+                    update_id = mensagem['update_id']
+                    chat_id = primeira_mensagem['message']['chat']['id']
 
                     print('Sim, tem um e-mail e um assunto, então serve para continuarmos')
 
@@ -334,8 +348,10 @@ OBSERVAÇÃO: Sempre que quiser trabalhar uma nova pauta, por favor, digite e en
 ############################IDENTAÇÃO DAS NEGATIVAS--------------------------------------------- /NÃO
             elif ultima_mensagem.startswith("/") and ultima_mensagem == '/Nao':
                 print('a pauta não serviu, vamos refazer')
-                nome_usuario = primeira_mensagem['message']['from']['first_name']
-
+                nome_usuario = mensagem['message']['from']['first_name']
+                update_id = mensagem['update_id']
+                chat_id = primeira_mensagem['message']['chat']['id']
+        
                 #MENSAGEM 04
                 abordagem2 = f'''
 Tudo bem, {nome_usuario}.
@@ -351,26 +367,31 @@ Para isso, clique em /continuar.
 
 
                 if ultima_mensagem == '/continuar':
-
+                    
+                    nome_usuario = mensagem['message']['from']['first_name']
+                    update_id = mensagem['update_id']
+                    chat_id = primeira_mensagem['message']['chat']['id']
+        
                     print('A última mensagem é esta')
                     print(ultima_mensagem)
 
             #IDENTAÇÃO DE FIM
     else:
+        nome_usuario = mensagem['message']['from']['first_name']
+        update_id = mensagem['update_id']
+        chat_id = primeira_mensagem['message']['chat']['id']
 
-            nome_usuario = mensagem['message']['from']['first_name']
-
-            #ENCERRAR ATENDIMENTO
-            encerrar = f'''
+        #ENCERRAR ATENDIMENTO
+        encerrar = f'''
 Desculpe, {nome_usuario}.
 Precisaremos encerrar o atendimento.
 Para recomeçar,  clique em /start.
 
 Muito obrigado.
 '''
-            #ENVIA O ENCERRAMENTO
-            finalizar = {"chat_id": chat_id, "text": encerrar}
-            requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=finalizar)  
+        #ENVIA O ENCERRAMENTO
+        finalizar = {"chat_id": chat_id, "text": encerrar}
+        requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=finalizar)  
 
 
 
