@@ -221,7 +221,7 @@ Clique para responder:
 2 - /Nao, refaça com uma abordagem diferente
 """
 
-
+#----------------------------------------------------------------------/Sim
     #IDENTAÇÃO
     elif ultima_mensagem == "/Sim":
         #
@@ -237,10 +237,22 @@ EXEMPLO: nome_alguem@gmail.com, Pauta sobre XXXXXXXXXXX
 FIQUE ATENTO: caso você não envie um e-mail válido e um assunto em menos de 3 minutos, retornarei à etapa anterior ou encerrarei a sessão.
 
 """
-        #ENVIA A MENSAGEM 02
-        #resposta4 = {"chat_id": chat_id, "text": desfecho1}
-        #requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta4)
-        
+#------------------------------------------------------------------------/Nao
+
+    elif ultima_mensagem == "/Nao":
+        print('a pauta não serviu, vamos refazer')
+
+        #MENSAGEM 04
+        resposta = f"""
+Tudo bem, {nome_usuario}.
+Desculpe pelo erro.
+Vamos refazer a pauta.
+
+Para isso, clique em /continuar.
+
+"""
+    
+    
     
     
     #ENVIA A MENSAGEM PARA O USUÁRIO
