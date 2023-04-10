@@ -253,7 +253,7 @@ Para isso, clique em /continuar.
 #------------------------------------------------------------------------/e-mail
 
     #
-    elif "@" in ultima_mensagem:
+    elif parse_email_subject(ultima_mensagem):
         #
         print('Sim, tem um e-mail e um assunto, então serve para continuarmos')
 
