@@ -101,24 +101,13 @@ id_modelo_chatgpt = 'gpt-3.5-turbo'
 offset = 0
 
 
-#--------------------------------------------------------------- INSERIR AQUI A FLASK
-app = Flask(__name__)
+#----------------------------------------------------------------
 
+#FUNÇÃO DE FUNCIONAMENTO DO BOT
 
-@app.route("/bot-das-pautas", methods=['POST'])
+def cria_pautas(mensagem):
+    ultima_mensagem = mensagem[-1]['message']['text']
 
-#FUNÇÃO PARA CRIAR A PAUTA
-
-def bot_das_pautas():
-    
-    primeira_mensagem = request.json #get(f'https://api.telegram.org/bot{token_telegram}/getUpdates?offset={offset + 1}').json()['result']
-    nome_usuario = primeira_mensagem[-1]['message']['from']['first_name']
-    update_id = primeira_mensagem[-1]['update_id']
-    ultima_mensagem = primeira_mensagem[-1]['message']['text']
-    chat_id = primeira_mensagem[-1]['message']['chat']['id']
-    print(update_id)
-    print(ultima_mensagem)
-    
 #---------------------------------------------------------------------------- /START --> RESPOSTA1
     if  ultima_mensagem.startswith("/") and ultima_mensagem == '/start':
         nome_usuario = mensagem[-1]['message']['from']['first_name']
@@ -388,6 +377,27 @@ Muito obrigado.
 
 
 
+    return print("Bot funcionando")
+
+#--------------------------------------------------------------- INSERIR AQUI A FLASK
+app = Flask(__name__)
+
+
+@app.route("/bot-das-pautas", methods=['POST'])
+
+#FUNÇÃO PARA CRIAR A PAUTA
+
+def bot_das_pautas():
+    
+    primeira_mensagem = request.json #get(f'https://api.telegram.org/bot{token_telegram}/getUpdates?offset={offset + 1}').json()['result']
+    nome_usuario = primeira_mensagem[-1]['message']['from']['first_name']
+    update_id = primeira_mensagem[-1]['update_id']
+    ultima_mensagem = primeira_mensagem[-1]['message']['text']
+    chat_id = primeira_mensagem[-1]['message']['chat']['id']
+    print(update_id)
+    print(ultima_mensagem)
+    cria_pautas(primeira_mensagem)
+    
     return "Bot funcionando"
     
     
