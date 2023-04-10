@@ -100,7 +100,7 @@ cache = Cache(app, config={'CACHE_TYPE': 'null'})
 @app.route("/bot-das-pautas", methods=['POST'])
 def bot_das_pautas():
     #['message']['chat']['id']['-1']['text']
-    primeira_mensagem = request.json
+    primeira_mensagem = request.get_json()
     ultima_mensagem = primeira_mensagem["message"]["text"]
     chat_id = primeira_mensagem["message"]["chat"]["id"]
     nome_usuario = primeira_mensagem["message"]["from"]["first_name"]  
