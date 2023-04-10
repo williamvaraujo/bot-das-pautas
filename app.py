@@ -150,7 +150,7 @@ OBSERVAÇÃO: quanto mais informação, mais assertiva a pauta. Por isso, seja c
     
 #---------------------------------------- INSERÇÃO DA PAUTA --> RESPOSTA3 --> RESPOSTA4 --> RESPOSTA5
 
-    elif not ultima_mensagem.startswith("/"):
+    elif not ultima_mensagem.startswith("/") and not "@" in ultima_mensagem:
         print("É um assunto com link e chegou no CHATGPT***********")
         print(ultima_mensagem)
                 
@@ -230,7 +230,7 @@ Clique para responder:
 Tudo bem, {nome_usuario}. Vamos finalizar a sessão e enviar a pauta para algum e-mail?
 Para isso, escreva o e-mail e o assunto do e-mail logo abaixo. Ambos separados por vírgula.
 
-EXEMPLO: nome_alguem@gmail.com, Pauta sobre XXXXXXXXXXX
+EXEMPLO: nome_alguem@gmail.com
 
 FIQUE ATENTO: caso você não envie um e-mail válido e um assunto em menos de 3 minutos, retornarei à etapa anterior ou encerrarei a sessão.
 
@@ -240,7 +240,7 @@ FIQUE ATENTO: caso você não envie um e-mail válido e um assunto em menos de 3
     elif ultima_mensagem == "/Nao":
         print('a pauta não serviu, vamos refazer')
 
-        #MENSAGEM 04
+        #MENSAGEM
         resposta = f"""
 Tudo bem, {nome_usuario}.
 Desculpe pelo erro.
@@ -269,7 +269,6 @@ Segue abaixo uma pauta para trabalho
 ********************************
 
 Atenciosamente.
-Fico à disposição para esclarecer dúvidas.
 
 """
 
