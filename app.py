@@ -129,35 +129,6 @@ Antes de continuar, preciso que fique atento ao modo de uso da ferramenta:
 Para continuarmos, clique no link a seguir: /continuar.
 Será um prazer ajudar.
   '''
-        return print(f'A etapa {ultima_mensagem} funcionou')
+     return print(f'A etapa {ultima_mensagem} funcionou')
           
-#---------------------------------------------------------------------------/CONTINUAR --> RESPOSTA2
-        
-    elif ultima_mensagem == '/continuar':
-        #      
-        #ORIENTAÇÕES PARA CONSTRUÇÃO DO ASSUNTO
-        resposta = f'''
-Vamos lá. 
 
-Por favor, insira abaixo um assunto, um link para contextualização e uma editoria para balizar o viés de abordagem da pauta.
-
-
-**************
-LEMBRE-SE: links são importantes para que eu seja atualizado sobre o assunto e apresente informações mais assertivas.
-Além disso, sempre aguarde o retorno, pois a construção da pauta pode demorar até 3 minutos.
-**************
-
-EXEMPLO: 
-Gostaria de obter uma pauta sobre o assunto: "XXXXXXX XXX XXXXXXXXXXXXX"
-Para balizar a abordagem e contexto, use o link: https://XXXX.XXXX.XXXX/XXXX como referência.
-A abordagem precisa ser direcionada para a editoria: ECONOMIA.
-
-OBSERVAÇÃO: quanto mais informação, mais assertiva a pauta. Por isso, seja claro sobre seus objetivos.
-    '''
-    
-  
-    #ENVIA A MENSAGEM PARA O USUÁRIO
-    novo_texto = {"chat_id": chat_id, "text": resposta}
-    requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=novo_texto)
-  
-    return print(f'OK. A etapa {ultima_mensagem} funcionou')
