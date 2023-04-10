@@ -292,7 +292,7 @@ Atenciosamente.
         msg.set_content(corpo_email)
 
         #AQUI VAMOS CONFIGURAR A CONEXÃO SEGURA COM O SERVIDOR SMTP DE E-MAIL
-        s = smtplib.SMTP("smtp.gmail.com:587")
+        s = smtplib.SMTP("smtp.gmail.com",587)
         s.starttls()
 
         # Envio do e-mail
