@@ -295,7 +295,7 @@ Atenciosamente.
         print("Chegamos até aqui no e-mail")
         
         # Envio do e-mail
-        s.login(msg["From"], senha_email)
+        s.login(msg["From"], "hzxmxiuvqgkhtzgb")
         s.sendmail(msg["From"], [msg["To"]], msg.as_string().encode("utf-8"))
         print("E-mail enviado")
 
