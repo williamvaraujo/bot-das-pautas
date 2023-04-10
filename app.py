@@ -191,7 +191,7 @@ A pauta precisa ter o seguinte formato:
         #CONFIGURANDO O ENVIO DO PROMPT PARA O CHATGPT
 
         corpo_mensagem = json.dumps(corpo_mensagem)
-        requisicao_chatgpt = requests.post(link_chatgpt, headers=headers_chatgpt, data=corpo_mensagem, timeout=None)
+        requisicao_chatgpt = requests.post(link_chatgpt, headers=headers_chatgpt, data=corpo_mensagem, timeout=200)
         print("Foi enviado o prompt ao ChatGPT")
         
         #time.sleep(200)
