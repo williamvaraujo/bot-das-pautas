@@ -59,7 +59,7 @@ def parse_email_subject(text):
     
 #AQUI VAMOS CRIAR UMA FUNÇÃO PARA DIVIDIR O QUE FOI DIGITADO E PREENCHER OS DADOS PARA ENVIO DO E-MAIL
 def dividir_texto(texto):
-    partes = texto.split(', ')
+    partes = texto.split(", ")
     destinatario = partes[0]
     assunto_do_email = partes[1]
     print(destinatario)
@@ -239,6 +239,9 @@ FIQUE ATENTO: caso você não envie um e-mail válido e um assunto em menos de 3
             #ENVIA A MENSAGEM 02
             #resposta4 = {"chat_id": chat_id, "text": desfecho1}
             #requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta4)
+        
+        else:
+            continue
     else:
         return "Ok, não era um link"
     
