@@ -392,4 +392,3 @@ Muito obrigado.
     
     
 #-------------------------------------------------- RODA O BOT
-bot_das_pautas(primeira_mensagem)
