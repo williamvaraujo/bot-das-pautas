@@ -22,14 +22,14 @@ token_telegram = os.environ["TELEGRAM_APY_KEY"]
 
 
 #TOKEN GOOGLE SHEETS API #ARQUIVO OCULTO NA RAIZ
-GOOGLE_SHEETS_CREDENTIALS = os.environ['GOOGLE_SHEETS_CREDENTIALS']
+GOOGLE_SHEETS_CREDENTIALS = os.environ["GOOGLE_SHEETS_CREDENTIALS"]
 with open("credenciais.json", mode="w") as fobj:
   fobj.write(GOOGLE_SHEETS_CREDENTIALS)
-id_da_planilha = '1JMO_CCRtR7y2ntpYNZixc2Ma3e7VbtMj31zb7ymJc8c'   #ID_PLANILHA
-nome_da_pag = 'NOME_PLANILHA'    #NOME_PLANILHA
+id_da_planilha = "1JMO_CCRtR7y2ntpYNZixc2Ma3e7VbtMj31zb7ymJc8c"   #ID_PLANILHA
+nome_da_pag = "NOME_PLANILHA"    #NOME_PLANILHA
 scopes = [
-    'https://www.googleapis.com/auth/spreadsheets',
-    'https://www.googleapis.com/auth/drive'
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive"
 ]
 gs_credenciais = ServiceAccountCredentials.from_json_keyfile_name("credenciais.json")
 cliente = gspread.authorize(gs_credenciais)
@@ -38,12 +38,12 @@ cliente = gspread.authorize(gs_credenciais)
 planilha = cliente.open_by_key(id_da_planilha).sheet1
   
 #TOKEN_CHAT_GPT #TOKEN_CHATGPT
-token_chatgpt = os.environ['TOKEN_CHATGPT']
+token_chatgpt = os.environ["TOKEN_CHATGPT"]
 
 #CADASTRO DO E-MAIL
 # Configurar informações da conta
-email = 'email' #email
-senha_email = 'senha_email' #senha_email
+email = "email" #email
+senha_email = "senha_email" #senha_email
 #-----------------------------------------------------------------
 
 #FAZENDO A CONFIGURAÇÃO DOS CLIENTES DOS TOKENS
@@ -68,9 +68,9 @@ def dividir_texto(texto):
 
 
 #AQUI, VAMOS FAZER A CONFIGURAÇÃO DE ACESSO AO MODELO IDEAL DE CHATPGT, INCLUSIVE, COM HEARDERS PARA ENVIAR UM POST JSON
-headers_chatgpt = {'Authorization': f'Bearer {token_chatgpt}', 'content-type': 'Application/json'}
-link_chatgpt = 'https://api.openai.com/v1/chat/completions'
-id_modelo_chatgpt = 'gpt-3.5-turbo'
+headers_chatgpt = {"Authorization": f"Bearer {token_chatgpt}", "content-type": "Application/json"}
+link_chatgpt = "https://api.openai.com/v1/chat/completions"
+id_modelo_chatgpt = "gpt-3.5-turbo"
 
 
 #----------------------------------------------------------------
@@ -84,7 +84,7 @@ id_modelo_chatgpt = 'gpt-3.5-turbo'
 #OBSERVAÇÃO: Este offset não tem o mesmo significado do OFFSET presente nos dados da mensagem. Este offset representa o UPDATE_ID;
 #**Sempre buscaremos a última interação do usuário, por isso, o update_id e a mensagem serão as últimas do dicionário JSON. Serão [-1] para poderem ser os últimos.**
 
-offset = 0
+#offset = 0
 ##############################################################################################################################
 ##############################################################################################################################
 
@@ -95,21 +95,21 @@ offset = 0
 #FUNÇÃO DE FUNCIONAMENTO DO BOT
 
 app = Flask(__name__)
-@app.route("/bot-das-pautas", methods=['POST'])
+@app.route("/bot-das-pautas", methods=["POST"])
 def bot_das_pautas():
     #
-    primeira_mensagem = request.get_json()
+    primeira_mensagem = request.json
     ultima_mensagem = primeira_mensagem["message"]["text"]
     chat_id = primeira_mensagem["message"]["chat"]["id"]
     nome_usuario = primeira_mensagem["message"]["from"]["first_name"]  
     print(primeira_mensagem)
-    print(message)
+    print(ultima_mensagem)
     print(chat_id)
     print(nome_usuario)
 #---------------------------------------------------------------------------- /START --> RESPOSTA1
-    if ultima_mensagem == '/start':
+    if ultima_mensagem == "/start":
         #MENSAGEM DE BOAS-VINDAS E ORIENTAÇÃO
-        resposta = f'''
+        resposta = f"""
 Olá, {nome_usuario}, tudo bem?
 Antes de continuar, preciso que fique atento ao modo de uso da ferramenta:
 1 - Responda apenas o que for solicitado pelo bot;
@@ -122,14 +122,14 @@ Antes de continuar, preciso que fique atento ao modo de uso da ferramenta:
 *************************
 Para continuarmos, clique no link a seguir: /continuar.
 Será um prazer ajudar.
-  '''
+  """
 
 #---------------------------------------------------------------------------/CONTINUAR --> RESPOSTA2
         
-    elif ultima_mensagem == '/continuar':
+    elif ultima_mensagem == "/continuar":
         #      
         #ORIENTAÇÕES PARA CONSTRUÇÃO DO ASSUNTO
-        resposta = f'''
+        resposta = f"""
 Vamos lá. 
 
 Por favor, insira abaixo um assunto, um link para contextualização e uma editoria para balizar o viés de abordagem da pauta.
@@ -146,10 +146,10 @@ Para balizar a abordagem e contexto, use o link: https://XXXX.XXXX.XXXX/XXXX com
 A abordagem precisa ser direcionada para a editoria: ECONOMIA.
 
 OBSERVAÇÃO: quanto mais informação, mais assertiva a pauta. Por isso, seja claro sobre seus objetivos.
-    '''
+    """
     
   
         #ENVIA A MENSAGEM PARA O USUÁRIO
         novo_texto = {"chat_id": chat_id, "text": resposta}
         requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=novo_texto)
-    return 'Ok'
+    return "Ok"
