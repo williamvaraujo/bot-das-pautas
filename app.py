@@ -18,22 +18,19 @@ from oauth2client.service_account import ServiceAccountCredentials
 #ACESSANDO OS TOKENS
 
 #TOKEN TELEGRAM #TELEGRAM_APY_TOKEN
-token_telegram = "TELEGRAM_APY_TOKEN" 
+token_telegram = os.environ["TELEGRAM_APY_TOKEN"]
 
 
 #TOKEN GOOGLE SHEETS API #ARQUIVO OCULTO NA RAIZ
-
 GOOGLE_SHEETS_CREDENTIALS = os.environ['GOOGLE_SHEETS_CREDENTIALS']
 with open("credenciais.json", mode="w") as fobj:
   fobj.write(GOOGLE_SHEETS_CREDENTIALS)
 id_da_planilha = '1JMO_CCRtR7y2ntpYNZixc2Ma3e7VbtMj31zb7ymJc8c'   #ID_PLANILHA
 nome_da_pag = 'NOME_PLANILHA'    #NOME_PLANILHA
-
 scopes = [
     'https://www.googleapis.com/auth/spreadsheets',
     'https://www.googleapis.com/auth/drive'
 ]
-
 gs_credenciais = ServiceAccountCredentials.from_json_keyfile_name("credenciais.json")
 cliente = gspread.authorize(gs_credenciais)
   
@@ -41,7 +38,7 @@ cliente = gspread.authorize(gs_credenciais)
 planilha = cliente.open_by_key(id_da_planilha).sheet1
   
 #TOKEN_CHAT_GPT #TOKEN_CHATGPT
-token_chatgpt = 'TOKEN_CHATGPT'
+token_chatgpt = os.environ['TOKEN_CHATGPT']
 
 #CADASTRO DO E-MAIL
 # Configurar informações da conta
@@ -94,17 +91,21 @@ offset = 0
 #FUNÇÃO DE FUNCIONAMENTO DO BOT
 
 app = Flask(__name__)
-@app.route("/bot-das-pautas", methods=['POST'])
+@app.route("/bot-das-pautas", methods=['GET','POST'])
 def bot_das_pautas():
     #
     primeira_mensagem = request.json
     ultima_mensagem = primeira_mensagem['message']['text']
     chat_id = primeira_mensagem['message']['chat']['id']
     nome_usuario = primeira_mensagem['message']['from']['first_name']
+    print(primeira_mensagem)
+    print(ultima_mensagem)
+    print(chat_id)
+    print(nome_usuario)
 #---------------------------------------------------------------------------- /START --> RESPOSTA1
     if  ultima_mensagem.startswith("/") and ultima_mensagem == '/start':
-        #MENSAGEM DE BOAS-VINDAS E ORIENTAÇÃO
-        orientacao = f'''
+      #MENSAGEM DE BOAS-VINDAS E ORIENTAÇÃO
+      orientacao = f'''
 Olá, {nome_usuario}, tudo bem?
 
 Antes de continuar, preciso que fique atento ao modo de uso da ferramenta:
@@ -122,8 +123,8 @@ Antes de continuar, preciso que fique atento ao modo de uso da ferramenta:
 Para continuarmos, clique no link a seguir: /continuar.
 
 Será um prazer ajudar.
-    '''
+  '''
 
-        #ENVIA A MENSAGEM01 PARA O USUÁRIO
-        resposta1 = {"chat_id": chat_id, "text": orientacao}
-        requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta1)
+      #ENVIA A MENSAGEM01 PARA O USUÁRIO
+      resposta1 = {"chat_id": chat_id, "text": orientacao}
+      requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta1)
