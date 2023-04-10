@@ -105,7 +105,7 @@ def bot_das_pautas():
     chat_id = primeira_mensagem["message"]["chat"]["id"]
     nome_usuario = primeira_mensagem["message"]["from"]["first_name"]  
     print(primeira_mensagem)
-    print(message)
+    print(ultima_message)
     print(chat_id)
     print(nome_usuario)
 #---------------------------------------------------------------------------- /START --> RESPOSTA1
