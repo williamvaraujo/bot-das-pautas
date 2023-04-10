@@ -1,7 +1,7 @@
 #IMPORTAR AS BIBLIOTECAS NECESSÁRIAS
 
 from flask import Flask, request
-#from aioflask import Flask, request, Response
+from gunicorn.config import Config
 import requests
 import gspread
 import json
@@ -9,7 +9,6 @@ import re
 import os
 import time
 import smtplib
-#import asyncio
 from email.message import EmailMessage
 from datetime import datetime
 from google.oauth2 import service_account
@@ -52,6 +51,10 @@ senha_email = "senha_email" #senha_email
 #-----------------------------------------------------------------
 
 #FAZENDO A CONFIGURAÇÃO DOS CLIENTES DOS TOKENS
+
+#AUMENTANDO O TEMPO DE WORKER DO GUNICORN
+config = Config()
+config.timeout = 300  # valor em segundos
 
 #AQUI VAMOS CRIAR UMA FUNÇÃO PARA IDENTIFICAR E-MAILS NO STRING
 def parse_email_subject(text):
