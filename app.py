@@ -153,7 +153,7 @@ OBSERVAÇÃO: quanto mais informação, mais assertiva a pauta. Por isso, seja c
     elif not ultima_mensagem.startswith("/"):
         print("É um assunto com link e chegou no CHATGPT***********")
         print(ultima_mensagem)
-        retorno_pauta = f"""
+        recebido = f"""
 Ok. Recebi a pauta. Aguarde, por favor, pois posso demorar cerca de 5 minutos.
 Que tal tomar um café enquanto espera. Não precisa responder nada enquanto isso."""
 
@@ -173,7 +173,6 @@ o jornalismo brasileiro.
 Este é o assunto: {assunto}
 
 A pauta precisa ter o seguinte formato:
-
 1 - Produza uma sugestão de um título sobre o assunto com até 62 caracteres. Este tópico será chamado TÍTULO;
 2 - Produza uma introdução e contextualização a partir do link enviado. Pode ser também um resumo. Este tópico será chamado INTRODUÇÃO;
 3 - Produza uma abordagem semelhante à do link e somada a uma nova, explicando o que não foi explorado pelo texto, mas poderia ser apurado. Coloque a abordagem direciona à editoria que o usuário mencionou. Este tópico será chamado ABORDAGEM;
@@ -242,4 +241,3 @@ FIQUE ATENTO: caso você não envie um e-mail válido e um assunto em menos de 3
     novo_texto = {"chat_id": chat_id, "text": resposta}
     requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=novo_texto)
     return "Ok"
-  
