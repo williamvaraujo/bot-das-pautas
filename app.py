@@ -185,12 +185,15 @@ A pauta precisa ter o seguinte formato:
         #CONFIGURANDO O ENVIO DO PROMPT PARA O CHATGPT
         corpo_mensagem = json.dumps(corpo_mensagem)
         requisicao_chatgpt = requests.post(link_chatgpt, headers=headers_chatgpt, data=corpo_mensagem)
+        print("Foi enviado o prompt ao ChatGPT")
+        
+        time.sleep(240)
         
         #CONFIGURANDO O ENVIO DA RESPOSTA DO CHATGPT PARA SER REPASSADA AO TELEGRAM
         retorno_chatgpt = requisicao_chatgpt.json()
         resposta_chatgpt = retorno_chatgpt["choices"][0]["message"]["content"]
         print(resposta_chatgpt)
-
+        
         #ENVIA A RESPOSTA AO TELEGRAM
         resposta3 = {"chat_id": chat_id, "text": resposta_chatgpt+f"""
 *******************************************************
@@ -241,3 +244,4 @@ FIQUE ATENTO: caso você não envie um e-mail válido e um assunto em menos de 3
     novo_texto = {"chat_id": chat_id, "text": resposta}
     requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=novo_texto)
     return "Ok"
+
