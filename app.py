@@ -68,9 +68,7 @@ def dividir_texto(texto):
 
 
 #AQUI, VAMOS FAZER A CONFIGURAÇÃO DE ACESSO AO MODELO IDEAL DE CHATPGT, INCLUSIVE, COM HEARDERS PARA ENVIAR UM POST JSON
-headers_chatgpt = {"Authorization": f"Bearer {token_chatgpt}", "content-type": "Application/json"}
-link_chatgpt = "https://api.openai.com/v1/chat/completions"
-id_modelo_chatgpt = "gpt-3.5-turbo"
+
 
 
 #----------------------------------------------------------------
@@ -183,11 +181,14 @@ A pauta precisa ter o seguinte formato:
 """
            }]}
         #CONFIGURANDO O ENVIO DO PROMPT PARA O CHATGPT
+        headers_chatgpt = {"Authorization": f"Bearer {token_chatgpt}", "content-type": "Application/json"}
+        link_chatgpt = "https://api.openai.com/v1/chat/completions"
+        id_modelo_chatgpt = "gpt-3.5-turbo"
         corpo_mensagem = json.dumps(corpo_mensagem)
         requisicao_chatgpt = requests.post(link_chatgpt, headers=headers_chatgpt, data=corpo_mensagem)
         print("Foi enviado o prompt ao ChatGPT")
         
-        time.sleep(240)
+        #time.sleep(240)
         
         #CONFIGURANDO O ENVIO DA RESPOSTA DO CHATGPT PARA SER REPASSADA AO TELEGRAM
         retorno_chatgpt = requisicao_chatgpt.json()
@@ -244,4 +245,3 @@ FIQUE ATENTO: caso você não envie um e-mail válido e um assunto em menos de 3
     novo_texto = {"chat_id": chat_id, "text": resposta}
     requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=novo_texto)
     return "Ok"
-
