@@ -160,4 +160,4 @@ OBSERVAÇÃO: quanto mais informação, mais assertiva a pauta. Por isso, seja c
     novo_texto = {"chat_id": chat_id, "text": resposta}
     requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=novo_texto)
   
-		    return print(f'A etapa {ultima_mensagem} funcionou')
+  return print(f'OK. A etapa {ultima_mensagem} funcionou')
