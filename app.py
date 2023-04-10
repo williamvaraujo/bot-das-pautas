@@ -1,7 +1,6 @@
 #IMPORTAR AS BIBLIOTECAS NECESSÁRIAS
 
 from flask import Flask, request
-from flask_caching import Cache
 import requests
 import gspread
 import json
@@ -85,7 +84,7 @@ id_modelo_chatgpt = 'gpt-3.5-turbo'
 #OBSERVAÇÃO: Este offset não tem o mesmo significado do OFFSET presente nos dados da mensagem. Este offset representa o UPDATE_ID;
 #**Sempre buscaremos a última interação do usuário, por isso, o update_id e a mensagem serão as últimas do dicionário JSON. Serão [-1] para poderem ser os últimos.**
 
-#offset = 0
+offset = 0
 ##############################################################################################################################
 ##############################################################################################################################
 
@@ -96,16 +95,15 @@ id_modelo_chatgpt = 'gpt-3.5-turbo'
 #FUNÇÃO DE FUNCIONAMENTO DO BOT
 
 app = Flask(__name__)
-cache = Cache(app, config={'CACHE_TYPE': 'null'})
 @app.route("/bot-das-pautas", methods=['POST'])
 def bot_das_pautas():
-    #['message']['chat']['id']['-1']['text']
-    primeira_mensagem = request.get_json()
+    #
+    primeira_mensagem = request.json
     ultima_mensagem = primeira_mensagem["message"]["text"]
     chat_id = primeira_mensagem["message"]["chat"]["id"]
     nome_usuario = primeira_mensagem["message"]["from"]["first_name"]  
     print(primeira_mensagem)
-    print(ultima_mensagem)
+    print(message)
     print(chat_id)
     print(nome_usuario)
 #---------------------------------------------------------------------------- /START --> RESPOSTA1
@@ -151,8 +149,7 @@ OBSERVAÇÃO: quanto mais informação, mais assertiva a pauta. Por isso, seja c
     '''
     
   
-    #ENVIA A MENSAGEM PARA O USUÁRIO
-    novo_texto = {"chat_id": chat_id, "text": resposta}
-    requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=novo_texto)
-    print('chegou aqui')
+        #ENVIA A MENSAGEM PARA O USUÁRIO
+        novo_texto = {"chat_id": chat_id, "text": resposta}
+        requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=novo_texto)
     return 'Ok'
