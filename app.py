@@ -46,8 +46,8 @@ id_modelo_chatgpt = "gpt-3.5-turbo"
 
 #CADASTRO DO E-MAIL
 # Configurar informações da conta
-email = "bot.das.pautas@gmail.com" #email
-senha_email = "hzxmxiuvqgkhtzgb" #senha_email
+email = "email" #email
+senha_email = "senha_email" #senha_email
 print(email)
 print(senha_email)
 #-----------------------------------------------------------------
