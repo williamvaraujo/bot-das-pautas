@@ -10,4 +10,3 @@ secure-smtplib
 datetime
 oauth2client
 flask_caching
-aioflask
