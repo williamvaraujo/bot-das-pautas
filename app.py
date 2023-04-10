@@ -46,8 +46,8 @@ id_modelo_chatgpt = "gpt-3.5-turbo"
 
 #CADASTRO DO E-MAIL
 # Configurar informações da conta
-email = "email" #email
-senha_email = "senha_email" #senha_email
+email = os.environ["email"] #email
+senha_email = os.environ["senha_email"] #senha_email
 #-----------------------------------------------------------------
 #################################################################
 
@@ -290,11 +290,11 @@ Atenciosamente.
         msg.set_content(corpo_email)
 
         #AQUI VAMOS CONFIGURAR A CONEXÃO SEGURA COM O SERVIDOR SMTP DE E-MAIL
-        s = smtplib.SMTP("smtp.gmail.com: 587")
+        s = smtplib.SMTP("smtp.gmail.com:587")
         s.starttls()
 
         # Envio do e-mail
-        s.login(msg["From"], senha_email)
+        s.login(msg["From"], f"{senha_email}")
         s.sendmail(msg["From"], [msg["To"]], msg.as_string().encode("utf-8"))
         print("E-mail enviado")
 
