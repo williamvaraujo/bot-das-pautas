@@ -96,7 +96,7 @@ app = Flask(__name__)
 @app.route("/bot-das-pautas", methods=["POST"])
 def bot_das_pautas():
     #
-    primeira_mensagem = request.json
+    primeira_mensagem = request.get_json()
     ultima_mensagem = primeira_mensagem["message"]["text"]
     chat_id = primeira_mensagem["message"]["chat"]["id"]
     nome_usuario = primeira_mensagem["message"]["from"]["first_name"]  
@@ -105,15 +105,7 @@ def bot_das_pautas():
     print(chat_id)
     print(nome_usuario)
     
-    if not "message" in ultima_mensagem:
-        primeira_mensagem = request.get_json()
-        ultima_mensagem = primeira_mensagem["message"]["text"]
-        chat_id = primeira_mensagem["message"]["chat"]["id"]
-        nome_usuario = primeira_mensagem["message"]["from"]["first_name"]  
-        print(primeira_mensagem)
-        print(ultima_mensagem)
-        print(chat_id)
-        print(nome_usuario)
+
 #---------------------------------------------------------------------------- /START --> RESPOSTA1
     if ultima_mensagem == "/start":
         #MENSAGEM DE BOAS-VINDAS E ORIENTAÇÃO
