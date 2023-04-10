@@ -85,13 +85,21 @@ id_modelo_chatgpt = 'gpt-3.5-turbo'
 #**Sempre buscaremos a última interação do usuário, por isso, o update_id e a mensagem serão as últimas do dicionário JSON. Serão [-1] para poderem ser os últimos.**
 
 offset = 0
+
 ##############################################################################################################################
 ##############################################################################################################################
+##############################################################################################################################
+##############################################################################################################################
+##############################################################################################################################
+##############################################################################################################################
+
+
+
 
 #FUNÇÃO DE FUNCIONAMENTO DO BOT
 
 app = Flask(__name__)
-@app.route("/bot-das-pautas", methods=['POST'])
+@app.route("/bot-das-pautas", methods=['GET','POST'])
 def bot_das_pautas():
     #
     primeira_mensagem = request.json
@@ -104,12 +112,10 @@ def bot_das_pautas():
     print(nome_usuario)
 #---------------------------------------------------------------------------- /START --> RESPOSTA1
     if ultima_mensagem == '/start':
-      #MENSAGEM DE BOAS-VINDAS E ORIENTAÇÃO
-      orientacao = f'''
+        #MENSAGEM DE BOAS-VINDAS E ORIENTAÇÃO
+        resposta = f'''
 Olá, {nome_usuario}, tudo bem?
-
 Antes de continuar, preciso que fique atento ao modo de uso da ferramenta:
-
 1 - Responda apenas o que for solicitado pelo bot;
 2 - AGUARDE O RETORNO PARA A DEMANDA, pois podemos demorar alguns segundos para responder;
 3 - Compreenda que sou uma ferramenta colaborativa. Mesmo após obter os resultados, será necessário revisá-los para saber se consegui atender suas expectativas;
@@ -117,29 +123,17 @@ Antes de continuar, preciso que fique atento ao modo de uso da ferramenta:
 5 - Sempre que quiser resetar a conversa, digite e envie "/start" (sem aspas);
 6 - Você pode pedir que a pauta seja refeita quantas vezes quiser, mas lembre-se de que quanto mais o assunto for detalhado e tiver links de balizamento melhor;
 7 - Esta ferramenta foi desenvolvida pelo jornalista Will Araújo.
-
-
 *************************
 Para continuarmos, clique no link a seguir: /continuar.
-
 Será um prazer ajudar.
   '''
 
-      #ENVIA A MENSAGEM01 PARA O USUÁRIO
-      resposta1 = {"chat_id": chat_id, "text": orientacao}
-      requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta1)
-    
-    #
 #---------------------------------------------------------------------------/CONTINUAR --> RESPOSTA2
         
     elif ultima_mensagem == '/continuar':
         #      
-        nome_usuario = primeira_mensagem['message']['from']['first_name']
-        update_id = primeira_mensagem['update_id']
-        chat_id = primeira_mensagem['message']['chat']['id']      
-
         #ORIENTAÇÕES PARA CONSTRUÇÃO DO ASSUNTO
-        assunto = f'''
+        resposta = f'''
 Vamos lá. 
 
 Por favor, insira abaixo um assunto, um link para contextualização e uma editoria para balizar o viés de abordagem da pauta.
@@ -157,7 +151,10 @@ A abordagem precisa ser direcionada para a editoria: ECONOMIA.
 
 OBSERVAÇÃO: quanto mais informação, mais assertiva a pauta. Por isso, seja claro sobre seus objetivos.
     '''
-        #ENVIA A MENSAGEM 02
-        resposta2 = {"chat_id": chat_id, "text": assunto}
-        requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta2)
+    
+  
+    #ENVIA A MENSAGEM PARA O USUÁRIO
+    novo_texto = {"chat_id": chat_id, "text": resposta}
+    requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=novo_texto)
+    
     return print(f'A etapa {ultima_mensagem} funcionou')
