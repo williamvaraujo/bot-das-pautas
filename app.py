@@ -1,6 +1,7 @@
 #IMPORTAR AS BIBLIOTECAS NECESSÁRIAS
 
 from flask import Flask, request
+from flask_caching import Cache
 import requests
 import gspread
 import json
@@ -95,6 +96,7 @@ offset = 0
 #FUNÇÃO DE FUNCIONAMENTO DO BOT
 
 app = Flask(__name__)
+cache = Cache(app, config={'CACHE_TYPE': 'null'})
 @app.route("/bot-das-pautas", methods=['POST'])
 def bot_das_pautas():
     #
