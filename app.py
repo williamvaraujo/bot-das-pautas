@@ -104,8 +104,6 @@ def bot_das_pautas():
     print(ultima_mensagem)
     print(chat_id)
     print(nome_usuario)
-    resposta = "Não foi digitada uma mensagem correta"
-
 #---------------------------------------------------------------------------- /START --> RESPOSTA1
     if ultima_mensagem == "/start":
         #MENSAGEM DE BOAS-VINDAS E ORIENTAÇÃO
@@ -147,8 +145,7 @@ A abordagem precisa ser direcionada para a editoria: ECONOMIA.
 
 OBSERVAÇÃO: quanto mais informação, mais assertiva a pauta. Por isso, seja claro sobre seus objetivos.
     """
-     
-
+    
 #---------------------------------------- INSERÇÃO DA PAUTA --> RESPOSTA3 --> RESPOSTA4 --> RESPOSTA5
 
     elif not ultima_mensagem.startswith("/"):
@@ -215,7 +212,7 @@ A pauta precisa ter o seguinte formato:
         planilha.insert_row([data_formatada, update_id, nome_usuario, resposta_chatgpt], 2)
         
         #ENVIA A RESPOSTA AO TELEGRAM
-        resposta = {"chat_id": chat_id, "text": resposta_chatgpt+f"""
+        resposta = f"""{resposta_chatgpt}+
 *******************************************************
 
 {nome_usuario}, podemos continuar a partir dessa pauta?
@@ -227,9 +224,7 @@ Clique para responder:
 2 - /Nao, refaça com uma abordagem diferente
 """
 
-    
-    
-    
+
     #IDENTAÇÃO
     elif ultima_mensagem == "/Sim":
         #
@@ -247,7 +242,8 @@ FIQUE ATENTO: caso você não envie um e-mail válido e um assunto em menos de 3
 """
         #ENVIA A MENSAGEM 02
         #resposta4 = {"chat_id": chat_id, "text": desfecho1}
-        #requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta4)    
+        #requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta4)
+        
     
     
     #ENVIA A MENSAGEM PARA O USUÁRIO
