@@ -389,7 +389,7 @@ app = Flask(__name__)
 
 def bot_das_pautas():
     
-    primeira_mensagem = request.json #.get(f'https://api.telegram.org/bot{token_telegram}/getUpdates?offset={offset + 1}').json()['result']
+    primeira_mensagem = requests.get(f'https://api.telegram.org/bot{token_telegram}/getUpdates?offset={offset + 1}').json()['result']
     #nome_usuario = primeira_mensagem[-1]['message']['from']['first_name']
     #update_id = primeira_mensagem[-1]['update_id']
     #ultima_mensagem = primeira_mensagem[-1]['message']['text']
