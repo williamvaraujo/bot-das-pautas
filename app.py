@@ -93,7 +93,7 @@ def dividir_texto(texto):
 
 app = Flask(__name__)
 @app.route("/bot-das-pautas", methods=["POST"])
-async def bot_das_pautas():
+def bot_das_pautas():
     #
     primeira_mensagem = request.json
     ultima_mensagem = primeira_mensagem["message"]["text"]
@@ -192,8 +192,8 @@ A pauta precisa ter o seguinte formato:
             resposta_chatgpt = retorno_chatgpt["choices"][0]["message"]["content"]
             time.sleep(5)
         
-        print(resposta_chatgpt)
-                
+            print(resposta_chatgpt)
+        print("Passou pelo While")  
         
         #CADASTRANDO A PAUTA NA PLANILHA
         nome_usuario = primeira_mensagem["message"]["from"]["first_name"]
