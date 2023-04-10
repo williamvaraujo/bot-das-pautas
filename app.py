@@ -101,7 +101,7 @@ offset = 0
 #FUNÇÃO DE FUNCIONAMENTO DO BOT
 
 app = Flask(__name__)
-@app.route("/bot-das-pautas", methods=['POST'])
+@app.route("/bot-das-pautas", methods=['GET','POST'])
 def bot_das_pautas():
     #
     primeira_mensagem = requests.get(f'https://api.telegram.org/bot{token_telegram}/getUpdates?offset={offset + 1}').json()['result']
