@@ -129,6 +129,6 @@ Antes de continuar, preciso que fique atento ao modo de uso da ferramenta:
 Para continuarmos, clique no link a seguir: /continuar.
 Será um prazer ajudar.
   '''
-     return print(f'A etapa {ultima_mensagem} funcionou')
+        return print(f'A etapa {ultima_mensagem} funcionou')
           
 
