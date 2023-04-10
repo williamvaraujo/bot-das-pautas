@@ -129,7 +129,8 @@ Antes de continuar, preciso que fique atento ao modo de uso da ferramenta:
 Para continuarmos, clique no link a seguir: /continuar.
 Será um prazer ajudar.
   '''
-
+        return print(f'A etapa {ultima_mensagem} funcionou')
+          
 #---------------------------------------------------------------------------/CONTINUAR --> RESPOSTA2
         
     elif ultima_mensagem == '/continuar':
@@ -158,5 +159,5 @@ OBSERVAÇÃO: quanto mais informação, mais assertiva a pauta. Por isso, seja c
     #ENVIA A MENSAGEM PARA O USUÁRIO
     novo_texto = {"chat_id": chat_id, "text": resposta}
     requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=novo_texto)
-    
-    return print(f'A etapa {ultima_mensagem} funcionou')
+  
+        return print(f'A etapa {ultima_mensagem} funcionou')
