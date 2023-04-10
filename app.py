@@ -106,6 +106,7 @@ def bot_das_pautas():
     print(ultima_mensagem)
     print(chat_id)
     print(nome_usuario)
+    resposta = "Você não digitou uma mensagem válida. Tente /start novamente"
 #---------------------------------------------------------------------------- /START --> RESPOSTA1
     if ultima_mensagem == "/start":
         #MENSAGEM DE BOAS-VINDAS E ORIENTAÇÃO
@@ -310,7 +311,10 @@ OBSERVAÇÃO: Sempre que quiser trabalhar uma nova pauta, por favor, digite e en
 """
 
 
-
+    else:
+        resposta = f"""
+Você não digitou uma resposta válida. Digite novamente.
+"""
 
 
 #------------------------------------------------------------------------/fim
