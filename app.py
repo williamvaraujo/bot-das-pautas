@@ -103,7 +103,7 @@ def bot_das_pautas():
     print(chat_id)
     print(nome_usuario)
 #---------------------------------------------------------------------------- /START --> RESPOSTA1
-    if  ultima_mensagem.startswith("/") and ultima_mensagem == '/start':
+    if ultima_mensagem == '/start':
       #MENSAGEM DE BOAS-VINDAS E ORIENTAÇÃO
       orientacao = f'''
 Olá, {nome_usuario}, tudo bem?
@@ -132,7 +132,7 @@ Será um prazer ajudar.
     #
 #---------------------------------------------------------------------------/CONTINUAR --> RESPOSTA2
         
-    elif ultima_mensagem.startswith("/") and ultima_mensagem == '/continuar':
+    elif ultima_mensagem == '/continuar':
         #      
         nome_usuario = primeira_mensagem['message']['from']['first_name']
         update_id = primeira_mensagem['update_id']
