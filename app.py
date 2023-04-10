@@ -194,6 +194,7 @@ A pauta precisa ter o seguinte formato:
             time.sleep(30)
         
         else:
+            break
         print(resposta_chatgpt)
                 
         
