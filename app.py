@@ -84,7 +84,7 @@ id_modelo_chatgpt = 'gpt-3.5-turbo'
 #OBSERVAÇÃO: Este offset não tem o mesmo significado do OFFSET presente nos dados da mensagem. Este offset representa o UPDATE_ID;
 #**Sempre buscaremos a última interação do usuário, por isso, o update_id e a mensagem serão as últimas do dicionário JSON. Serão [-1] para poderem ser os últimos.**
 
-offset = 0
+
 
 ##############################################################################################################################
 ##############################################################################################################################
@@ -99,7 +99,7 @@ offset = 0
 #FUNÇÃO DE FUNCIONAMENTO DO BOT
 
 app = Flask(__name__)
-@app.route("/bot-das-pautas", methods=['GET','POST'])
+@app.route("/bot-das-pautas", methods=['POST'])
 def bot_das_pautas():
     #
     primeira_mensagem = request.json
