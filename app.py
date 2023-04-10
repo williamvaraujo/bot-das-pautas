@@ -77,6 +77,8 @@ id_modelo_chatgpt = 'gpt-3.5-turbo'
 
 #Função para atualização do offset do link de endpoint da API
 #**OFFSET**
+
+offset = 0
 #Identificador da primeira atualização a ser retornada. Deve ser maior em um do que o maior entre os identificadores de atualizações recebidas anteriormente.
 #Por padrão, as atualizações que começam com a atualização não confirmada mais antiga são retornadas. Uma atualização é considerada confirmada assim que getUpdates
 #é chamado com um offset maior que seu update_id . O deslocamento negativo pode ser especificado para recuperar atualizações a partir de -offset update a partir do
@@ -102,10 +104,10 @@ app = Flask(__name__)
 @app.route("/bot-das-pautas", methods=['POST'])
 def bot_das_pautas():
     #
-    primeira_mensagem = request.json
-    ultima_mensagem = primeira_mensagem['message']['text']
-    chat_id = primeira_mensagem['message']['chat']['id']
-    nome_usuario = primeira_mensagem['message']['from']['first_name']
+    primeira_mensagem = requests.get(f'https://api.telegram.org/bot{token_telegram}/getUpdates?offset={offset + 1}').json()['result']
+    ultima_mensagem = primeira_mensagem[-1]['message']['text']
+    chat_id = primeira_mensagem[-1]['message']['chat']['id']
+    nome_usuario = primeira_mensagem[-1]['message']['from']['first_name']
     print(primeira_mensagem)
     print(ultima_mensagem)
     print(chat_id)
