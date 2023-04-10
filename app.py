@@ -285,7 +285,7 @@ Atenciosamente.
         msg["Subject"] = f"{assunto_do_email}"
         msg["From"] = f"{email}"
         msg["To"] = f"{destinatario}"
-        msg.add_header("Content-Type','text/html")
+        msg.add_header("Content-Type", "text/html")
         #msg.set_payload(corpo_email)
         msg.set_content(corpo_email)
 
