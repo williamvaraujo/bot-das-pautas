@@ -397,7 +397,7 @@ Muito obrigado.
 
 
 
-    return print("Bot funcionando")
+    return print(f'Bot rodou, mas a mensagem foi {mensagem}')
 
 #--------------------------------------------------------------- INSERIR AQUI A FLASK
 app = Flask(__name__)
@@ -414,11 +414,11 @@ def bot_das_pautas():
     update_id = primeira_mensagem['update_id']
     ultima_mensagem = primeira_mensagem['message']['text']
     chat_id = primeira_mensagem['message']['chat']['id']
-    #print(update_id)
-    #print(ultima_mensagem)
+    print(update_id)
+    print(ultima_mensagem)
     cria_pautas(primeira_mensagem)
     
-    return "Bot funcionando"
+    return "Bot funcionando, mas sem executar a função"
     
     
 #-------------------------------------------------- RODA O BOT
