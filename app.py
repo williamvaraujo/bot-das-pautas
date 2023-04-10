@@ -1,7 +1,7 @@
 #IMPORTAR AS BIBLIOTECAS NECESSÁRIAS
 
 from flask import Flask, request
-from aioflask import Flask, request, Response
+#from aioflask import Flask, request, Response
 import requests
 import gspread
 import json
@@ -9,7 +9,7 @@ import re
 import os
 import time
 import smtplib
-import asyncio
+#import asyncio
 from email.message import EmailMessage
 from datetime import datetime
 from google.oauth2 import service_account
@@ -69,20 +69,6 @@ def dividir_texto(texto):
     return destinatario, assunto_do_email
     
 #AQUI, VAMOS FAZER A CONFIGURAÇÃO DE ACESSO AO MODELO IDEAL DE CHATPGT, INCLUSIVE, COM HEARDERS PARA ENVIAR UM POST JSON
-
-async def enviar_mensagem(link_chatgpt, headers_chatgpt, corpo_mensagem):
-    # CONFIGURANDO O ENVIO DO PROMPT PARA O CHATGPT
-    corpo_mensagem = json.dumps(corpo_mensagem)
-    requisicao_chatgpt = await requests.post(link_chatgpt, headers=headers_chatgpt, data=corpo_mensagem)
-    print("Foi enviado o prompt ao ChatGPT")
-
-    # CONFIGURANDO O ENVIO DA RESPOSTA DO CHATGPT PARA SER REPASSADA AO TELEGRAM
-    retorno_chatgpt = await requisicao_chatgpt.json()
-    resposta_chatgpt = retorno_chatgpt["choices"][0]["message"]["content"]
-    print(resposta_chatgpt)
-
-    return resposta_chatgpt
-
 
 #----------------------------------------------------------------
 
@@ -191,8 +177,22 @@ A pauta precisa ter o seguinte formato:
 """
            }]}
         
-        resposta_chatgpt_fim = await enviar_mensagem(link_chatgpt, headers_chatgpt, corpo_mensagem)
-        print(resposta_chatgpt_fim)
+        #CONFIGURANDO O ENVIO DO PROMPT PARA O CHATGPT
+
+        corpo_mensagem = json.dumps(corpo_mensagem)
+        requisicao_chatgpt = requests.post(link_chatgpt, headers=headers_chatgpt, data=corpo_mensagem)
+        print("Foi enviado o prompt ao ChatGPT")
+        
+        #CONFIGURANDO O ENVIO DA RESPOSTA DO CHATGPT PARA SER REPASSADA AO TELEGRAM
+        
+        resposta_chatgpt = None
+            
+        while not resposta_chatgpt:
+            retorno_chatgpt = requisicao_chatgpt.json()
+            resposta_chatgpt = retorno_chatgpt["choices"][0]["message"]["content"]
+            time.sleep(5)
+        
+        print(resposta_chatgpt)
                 
         
         #CADASTRANDO A PAUTA NA PLANILHA
@@ -201,10 +201,10 @@ A pauta precisa ter o seguinte formato:
         chat_id = primeira_mensagem["message"]["chat"]["id"]
         data_atual = datetime.now()
         data_formatada = data_atual.strftime("%d/%m/%Y")
-        planilha.insert_row([data_formatada, update_id, nome_usuario, resposta_chatgpt_fim], 2)
+        planilha.insert_row([data_formatada, update_id, nome_usuario, resposta_chatgpt], 2)
         
         #ENVIA A RESPOSTA AO TELEGRAM
-        resposta = f"""{resposta_chatgpt_fim}+
+        resposta = f"""{resposta_chatgpt}+
 *******************************************************
 
 {nome_usuario}, podemos continuar a partir dessa pauta?
