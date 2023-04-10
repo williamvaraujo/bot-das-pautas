@@ -46,8 +46,8 @@ id_modelo_chatgpt = "gpt-3.5-turbo"
 
 #CADASTRO DO E-MAIL
 # Configurar informações da conta
-email = "email" #email
-senha_email = "senha_email" #senha_email
+email = os.environ["email"] #email
+senha_email = os.environ["senha_email"] #senha_email
 print(email)
 print(senha_email)
 #-----------------------------------------------------------------
