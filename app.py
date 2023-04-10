@@ -49,12 +49,6 @@ id_modelo_chatgpt = "gpt-3.5-turbo"
 email = "email" #email
 senha_email = "senha_email" #senha_email
 #-----------------------------------------------------------------
-
-from app import app
-
-os.environ['TIMEOUT'] = '300'
-
-
 #################################################################
 
 #FAZENDO A CONFIGURAÇÃO DOS CLIENTES DOS TOKENS
