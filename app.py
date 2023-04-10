@@ -77,8 +77,6 @@ id_modelo_chatgpt = 'gpt-3.5-turbo'
 
 #Função para atualização do offset do link de endpoint da API
 #**OFFSET**
-
-offset = 0
 #Identificador da primeira atualização a ser retornada. Deve ser maior em um do que o maior entre os identificadores de atualizações recebidas anteriormente.
 #Por padrão, as atualizações que começam com a atualização não confirmada mais antiga são retornadas. Uma atualização é considerada confirmada assim que getUpdates
 #é chamado com um offset maior que seu update_id . O deslocamento negativo pode ser especificado para recuperar atualizações a partir de -offset update a partir do
@@ -86,14 +84,10 @@ offset = 0
 #OBSERVAÇÃO: Este offset não tem o mesmo significado do OFFSET presente nos dados da mensagem. Este offset representa o UPDATE_ID;
 #**Sempre buscaremos a última interação do usuário, por isso, o update_id e a mensagem serão as últimas do dicionário JSON. Serão [-1] para poderem ser os últimos.**
 
+offset = 0
+##############################################################################################################################
+##############################################################################################################################
 
-
-##############################################################################################################################
-##############################################################################################################################
-##############################################################################################################################
-##############################################################################################################################
-##############################################################################################################################
-##############################################################################################################################
 
 
 
@@ -101,15 +95,15 @@ offset = 0
 #FUNÇÃO DE FUNCIONAMENTO DO BOT
 
 app = Flask(__name__)
-@app.route("/bot-das-pautas", methods=['GET','POST'])
+@app.route("/bot-das-pautas", methods=['POST'])
 def bot_das_pautas():
     #
-    primeira_mensagem = request.json #.get(f'https://api.telegram.org/bot{token_telegram}/getUpdates?offset={offset + 1}').json()['result']
-    ultima_mensagem = primeira_mensagem['message']['text']
-    chat_id = primeira_mensagem['message']['chat']['id']
-    nome_usuario = primeira_mensagem['message']['from']['first_name']
+    primeira_mensagem = request.json
+    ultima_mensagem = update["message"]["text"]
+    chat_id = update["message"]["chat"]["id"]
+    nome_usuario = update["message"]["from"]["first_name"]  
     print(primeira_mensagem)
-    print(ultima_mensagem)
+    print(message)
     print(chat_id)
     print(nome_usuario)
 #---------------------------------------------------------------------------- /START --> RESPOSTA1
@@ -129,12 +123,33 @@ Antes de continuar, preciso que fique atento ao modo de uso da ferramenta:
 Para continuarmos, clique no link a seguir: /continuar.
 Será um prazer ajudar.
   '''
+
+#---------------------------------------------------------------------------/CONTINUAR --> RESPOSTA2
         
-      
+    elif ultima_mensagem == '/continuar':
+        #      
+        #ORIENTAÇÕES PARA CONSTRUÇÃO DO ASSUNTO
+        resposta = f'''
+Vamos lá. 
+
+Por favor, insira abaixo um assunto, um link para contextualização e uma editoria para balizar o viés de abordagem da pauta.
+
+
+**************
+LEMBRE-SE: links são importantes para que eu seja atualizado sobre o assunto e apresente informações mais assertivas.
+Além disso, sempre aguarde o retorno, pois a construção da pauta pode demorar até 3 minutos.
+**************
+
+EXEMPLO: 
+Gostaria de obter uma pauta sobre o assunto: "XXXXXXX XXX XXXXXXXXXXXXX"
+Para balizar a abordagem e contexto, use o link: https://XXXX.XXXX.XXXX/XXXX como referência.
+A abordagem precisa ser direcionada para a editoria: ECONOMIA.
+
+OBSERVAÇÃO: quanto mais informação, mais assertiva a pauta. Por isso, seja claro sobre seus objetivos.
+    '''
+    
+  
     #ENVIA A MENSAGEM PARA O USUÁRIO
     novo_texto = {"chat_id": chat_id, "text": resposta}
-    requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=novo_texto) 
-    
-    return print(f'A etapa {ultima_mensagem} funcionou')
-          
-
+    requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=novo_texto)
+    return 'Ok'
