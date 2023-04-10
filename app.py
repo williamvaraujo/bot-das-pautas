@@ -104,10 +104,10 @@ app = Flask(__name__)
 @app.route("/bot-das-pautas", methods=['GET','POST'])
 def bot_das_pautas():
     #
-    primeira_mensagem = requests.get(f'https://api.telegram.org/bot{token_telegram}/getUpdates?offset={offset + 1}').json()['result']
-    ultima_mensagem = primeira_mensagem[-1]['message']['text']
-    chat_id = primeira_mensagem[-1]['message']['chat']['id']
-    nome_usuario = primeira_mensagem[-1]['message']['from']['first_name']
+    primeira_mensagem = request.json #.get(f'https://api.telegram.org/bot{token_telegram}/getUpdates?offset={offset + 1}').json()['result']
+    ultima_mensagem = primeira_mensagem['message']['text']
+    chat_id = primeira_mensagem['message']['chat']['id']
+    nome_usuario = primeira_mensagem['message']['from']['first_name']
     print(primeira_mensagem)
     print(ultima_mensagem)
     print(chat_id)
@@ -129,6 +129,12 @@ Antes de continuar, preciso que fique atento ao modo de uso da ferramenta:
 Para continuarmos, clique no link a seguir: /continuar.
 Será um prazer ajudar.
   '''
-        return print(f'A etapa {ultima_mensagem} funcionou')
+        
+      
+    #ENVIA A MENSAGEM PARA O USUÁRIO
+    novo_texto = {"chat_id": chat_id, "text": resposta}
+    requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=novo_texto) 
+    
+    return print(f'A etapa {ultima_mensagem} funcionou')
           
 
