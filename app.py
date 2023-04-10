@@ -40,7 +40,10 @@ cliente = gspread.authorize(gs_credenciais)
 planilha = cliente.open_by_key(id_da_planilha).sheet1
   
 #TOKEN_CHAT_GPT #TOKEN_CHATGPT
-token_chatgpt = "TOKEN_CHATGPT"
+token_chatgpt = ["TOKEN_CHATGPT"]
+headers_chatgpt = {"Authorization": f"Bearer {token_chatgpt}", "content-type": "Application/json"}
+link_chatgpt = "https://api.openai.com/v1/chat/completions"
+id_modelo_chatgpt = "gpt-3.5-turbo"
 
 #CADASTRO DO E-MAIL
 # Configurar informações da conta
@@ -153,9 +156,6 @@ OBSERVAÇÃO: quanto mais informação, mais assertiva a pauta. Por isso, seja c
                 
         #VERIFICANDO A MENSAGEM COMO UM LINK E FORMATANDO PARA SER USADA NO CHATGPT
         assunto = ultima_mensagem
-        headers_chatgpt = {"Authorization": f"Bearer {token_chatgpt}", "content-type": "Application/json"}
-        link_chatgpt = "https://api.openai.com/v1/chat/completions"
-        id_modelo_chatgpt = "gpt-3.5-turbo"
         print("chegou até o corpo da mensagem")
         
         corpo_mensagem = {
@@ -187,13 +187,15 @@ A pauta precisa ter o seguinte formato:
         
         resposta_chatgpt = None
             
-        while not resposta_chatgpt:
+        while resposta_chatgpt = None:
             retorno_chatgpt = requisicao_chatgpt.json()
             resposta_chatgpt = retorno_chatgpt["choices"][0]["message"]["content"]
             time.sleep(5)
+            print(f"Status code: {requisicao_chatgpt.status_code}")
+            print(f"Resposta: {requisicao_chatgpt.text}")
         
             print(resposta_chatgpt)
-        print("Passou pelo While")  
+        print("Passou pelo While")        
         
         #CADASTRANDO A PAUTA NA PLANILHA
         nome_usuario = primeira_mensagem["message"]["from"]["first_name"]
