@@ -96,7 +96,7 @@ app = Flask(__name__)
 @app.route("/bot-das-pautas", methods=["POST"])
 def bot_das_pautas():
     #
-    primeira_mensagem = request.get_json()
+    primeira_mensagem = request.json
     ultima_mensagem = primeira_mensagem["message"]["text"]
     chat_id = primeira_mensagem["message"]["chat"]["id"]
     nome_usuario = primeira_mensagem["message"]["from"]["first_name"]  
