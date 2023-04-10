@@ -276,8 +276,7 @@ Atenciosamente.
 """
 
         #CONSTRUIR E-MAIL E ENVIAR
-        email = ultima_mensagem
-        destinatario = email
+        destinatario = ultima_mensagem
         assunto_do_email = f"Nova sugestão de pauta enviada por {nome_usuario}"
         print(destinatario)
         print(assunto_do_email)
