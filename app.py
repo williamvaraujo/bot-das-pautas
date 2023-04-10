@@ -38,7 +38,7 @@ cliente = gspread.authorize(gs_credenciais)
 planilha = cliente.open_by_key(id_da_planilha).sheet1
   
 #TOKEN_CHAT_GPT #TOKEN_CHATGPT
-token_chatgpt = os.environ["TOKEN_CHATGPT"]
+token_chatgpt = "TOKEN_CHATGPT"
 
 #CADASTRO DO E-MAIL
 # Configurar informações da conta
@@ -159,12 +159,14 @@ Que tal tomar um café enquanto espera. Não precisa responder nada enquanto iss
         retorno_pauta = {"chat_id": chat_id, "text": recebido}
         requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=retorno_pauta)  
         print("chegou até este momento")
+        
         #VERIFICANDO A MENSAGEM COMO UM LINK E FORMATANDO PARA SER USADA NO CHATGPT
         assunto = ultima_mensagem
         headers_chatgpt = {"Authorization": f"Bearer {token_chatgpt}", "content-type": "Application/json"}
         link_chatgpt = "https://api.openai.com/v1/chat/completions"
         id_modelo_chatgpt = "gpt-3.5-turbo"
         print("chegou até o corpo da mensagem")
+        
         corpo_mensagem = {
         "model": id_modelo_chatgpt,
         "messages": [{"role": "user", "content": f"""
