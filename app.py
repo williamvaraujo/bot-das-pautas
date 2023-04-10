@@ -148,8 +148,98 @@ A abordagem precisa ser direcionada para a editoria: ECONOMIA.
 OBSERVAÇÃO: quanto mais informação, mais assertiva a pauta. Por isso, seja claro sobre seus objetivos.
     """
     
-  
+#---------------------------------------- INSERÇÃO DA PAUTA --> RESPOSTA3 --> RESPOSTA4 --> RESPOSTA5
+
+    elif not ultima_mensagem.startswith("/"):
+        print("É um assunto com link e chegou no CHATGPT***********")
+        print(ultima_mensagem)
+        retorno_pauta = f"""
+Ok. Recebi a pauta. Aguarde, por favor, pois posso demorar cerca de 5 minutos.
+Que tal tomar um café enquanto espera. Não precisa responder nada enquanto isso."""
+
+        #ENVIA O ENCERRAMENTO
+        retorno_pauta = {"chat_id": chat_id, "text": recebido}
+        requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=retorno_pauta)  
+
+        #VERIFICANDO A MENSAGEM COMO UM LINK E FORMATANDO PARA SER USADA NO CHATGPT
+        assunto = ultima_mensagem
+
+        corpo_mensagem = {
+        "model": id_modelo_chatgpt,
+        "messages": [{"role": "user", "content": f"""
+Olá, gostaria de trabalhar com você para que construa uma pauta jornalística. Por isso, peço que entre em um modo que familiarizado com 
+o jornalismo brasileiro.
+
+Este é o assunto: {assunto}
+
+A pauta precisa ter o seguinte formato:
+
+1 - Produza uma sugestão de um título sobre o assunto com até 62 caracteres. Este tópico será chamado TÍTULO;
+2 - Produza uma introdução e contextualização a partir do link enviado. Pode ser também um resumo. Este tópico será chamado INTRODUÇÃO;
+3 - Produza uma abordagem semelhante à do link e somada a uma nova, explicando o que não foi explorado pelo texto, mas poderia ser apurado. Coloque a abordagem direciona à editoria que o usuário mencionou. Este tópico será chamado ABORDAGEM;
+4 - Sugira ao menos 3 tipos de profissionais ou profissões que podem servir de fonte para a apuração. Junto, coloque o endereço de e-mail público de cada um, caso exista. Na ausência de nomes, indique profissões ou cargos que podem servir de fontes. Este tópico será chamado FONTES DE SUGESTÃO;
+5 - Indique uma palavra-chave a ser pesquisa no Google e que pode fornecer mais links sobre o assunto. Este tópico será chamado USE ESTA PALAVRA-CHAVE E PESQUISE MAIS INFORMAÇÕES COM ELA;
+6 - Sugira ao menos cinco perguntas com base no assunto e editoria que foi enviada. Este tópico será chamado PERGUNTAS DE SUGESTÃO;
+7 - Indique quais secretarias do governo Federal, Estadual ou Municipal brasileiro que podem ajudar no assunto. Explique porque buscar essa fonte oficial é importante e qual a função dela. Este tópico será chamado FONTES OFICIAIS.
+"""
+           }]}
+        #CONFIGURANDO O ENVIO DO PROMPT PARA O CHATGPT
+        corpo_mensagem = json.dumps(corpo_mensagem)
+        requisicao_chatgpt = requests.post(link_chatgpt, headers=headers_chatgpt, data=corpo_mensagem)
+        
+        #CONFIGURANDO O ENVIO DA RESPOSTA DO CHATGPT PARA SER REPASSADA AO TELEGRAM
+        retorno_chatgpt = requisicao_chatgpt.json()
+        resposta_chatgpt = retorno_chatgpt["choices"][0]["message"]["content"]
+        print(resposta_chatgpt)
+
+        #ENVIA A RESPOSTA AO TELEGRAM
+        resposta3 = {"chat_id": chat_id, "text": resposta_chatgpt+f"""
+*******************************************************
+
+{nome_usuario}, podemos continuar a partir dessa pauta?
+
+Darei cerca de dois minutos para responder.
+
+Clique para responder:
+1 - /Sim, vamos para a próxima etapa.
+2 - /Nao, refaça com uma abordagem diferente
+"""
+                        }
+        requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta3)
+
+
+
+        #IDENTAÇÃO
+        if ultima_mensagem == "/Sim":
+            #
+            print("A etapa do sim deu certo e podemos continuar com e-mail")
+
+            #CADASTRANDO A PAUTA NA PLANILHA
+            nome_usuario = primeira_mensagem["message"]["from"]["first_name"]
+            update_id = primeira_mensagem["update_id"]
+            chat_id = primeira_mensagem["message"]["chat"]["id"]
+            data_atual = datetime.now()
+            data_formatada = data_atual.strftime("%d/%m/%Y")
+            planilha.insert_row([data_formatada, update_id, nome_usuario, resposta_chatgpt], 2)
+
+            #PEGAR O E-MAIL
+            resposta = f"""
+Tudo bem, {nome_usuario}. Vamos finalizar a sessão e enviar a pauta para algum e-mail?
+Para isso, escreva o e-mail e o assunto do e-mail logo abaixo. Ambos separados por vírgula.
+
+EXEMPLO: nome_alguem@gmail.com, Pauta sobre XXXXXXXXXXX
+
+FIQUE ATENTO: caso você não envie um e-mail válido e um assunto em menos de 3 minutos, retornarei à etapa anterior ou encerrarei a sessão.
+
+"""
+            #ENVIA A MENSAGEM 02
+            #resposta4 = {"chat_id": chat_id, "text": desfecho1}
+            #requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta4)
+    
+    
+    
     #ENVIA A MENSAGEM PARA O USUÁRIO
     novo_texto = {"chat_id": chat_id, "text": resposta}
     requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=novo_texto)
     return "Ok"
+  
