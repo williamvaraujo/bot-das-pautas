@@ -111,10 +111,7 @@ def cria_pautas(mensagem):
 #---------------------------------------------------------------------------- /START --> RESPOSTA1
     if  ultima_mensagem.startswith("/") and ultima_mensagem == '/start':
         nome_usuario = mensagem['message']['from']['first_name']
-        update_id = mensagem[-1]['update_id']
-        #data_hora = mensagem[-1]['date']
-        #texto_da_mensagem = mensagem[-1]['message']['text']
-        
+        update_id = mensagem['update_id']
         
         #MENSAGEM DE BOAS-VINDAS E ORIENTAÇÃO
         orientacao = f'''
@@ -222,8 +219,8 @@ A pauta precisa ter o seguinte formato:
             print(resposta_chatgpt)
 
             #ENVIA A RESPOSTA AO TELEGRAM
-            nome_usuario = mensagem[-1]['message']['from']['first_name']
-            update_id = mensagem[-1]['update_id']
+            nome_usuario = mensagem['message']['from']['first_name']
+            update_id = mensagem['update_id']
             resposta3 = {"chat_id": chat_id, "text": resposta_chatgpt+f'''
 
 *******************************************************
@@ -245,8 +242,8 @@ Clique para responder:
                 print('A etapa do sim deu certo e podemos continuar com e-mail')
 
                 #CADASTRANDO A PAUTA NA PLANILHA
-                nome_usuario = primeira_mensagem[-1]['message']['from']['first_name']
-                update_id_novo = primeira_mensagem[-1]['update_id']
+                nome_usuario = primeira_mensagem['message']['from']['first_name']
+                update_id_novo = primeira_mensagem['update_id']
                 data_atual = datetime.now()
                 data_formatada = data_atual.strftime('%d/%m/%Y')
                 planilha.insert_row([data_formatada, update_id, nome_usuario, resposta_chatgpt], 2)
@@ -316,7 +313,7 @@ Fico à disposição para esclarecer dúvidas.
                     s.sendmail(msg['From'], [msg['To']], msg.as_string().encode('utf-8'))
                     print('E-mail enviado')
 
-                    nome_usuario = primeira_mensagem[-1]['message']['from']['first_name']
+                    nome_usuario = primeira_mensagem['message']['from']['first_name']
 
                     #MENSAGEM 05
                     enviado = f'''
@@ -337,7 +334,7 @@ OBSERVAÇÃO: Sempre que quiser trabalhar uma nova pauta, por favor, digite e en
 ############################IDENTAÇÃO DAS NEGATIVAS--------------------------------------------- /NÃO
             elif ultima_mensagem.startswith("/") and ultima_mensagem == '/Nao':
                 print('a pauta não serviu, vamos refazer')
-                nome_usuario = primeira_mensagem[-1]['message']['from']['first_name']
+                nome_usuario = primeira_mensagem['message']['from']['first_name']
 
                 #MENSAGEM 04
                 abordagem2 = f'''
@@ -361,7 +358,7 @@ Para isso, clique em /continuar.
             #IDENTAÇÃO DE FIM
     else:
 
-            nome_usuario = mensagem[-1]['message']['from']['first_name']
+            nome_usuario = mensagem['message']['from']['first_name']
 
             #ENCERRAR ATENDIMENTO
             encerrar = f'''
