@@ -189,15 +189,23 @@ A pauta precisa ter o seguinte formato:
         requisicao_chatgpt = requests.post(link_chatgpt, headers=headers_chatgpt, data=corpo_mensagem)
         print("Foi enviado o prompt ao ChatGPT")
         
-        #time.sleep(240)
+        time.sleep(200)
         
         #CONFIGURANDO O ENVIO DA RESPOSTA DO CHATGPT PARA SER REPASSADA AO TELEGRAM
         retorno_chatgpt = requisicao_chatgpt.json()
         resposta_chatgpt = retorno_chatgpt["choices"][0]["message"]["content"]
         print(resposta_chatgpt)
         
+        #CADASTRANDO A PAUTA NA PLANILHA
+        nome_usuario = primeira_mensagem["message"]["from"]["first_name"]
+        update_id = primeira_mensagem["update_id"]
+        chat_id = primeira_mensagem["message"]["chat"]["id"]
+        data_atual = datetime.now()
+        data_formatada = data_atual.strftime("%d/%m/%Y")
+        planilha.insert_row([data_formatada, update_id, nome_usuario, resposta_chatgpt], 2)
+        
         #ENVIA A RESPOSTA AO TELEGRAM
-        resposta3 = {"chat_id": chat_id, "text": resposta_chatgpt+f"""
+        resposta = {"chat_id": chat_id, "text": resposta_chatgpt+f"""
 *******************************************************
 
 {nome_usuario}, podemos continuar a partir dessa pauta?
@@ -209,25 +217,17 @@ Clique para responder:
 2 - /Nao, refaça com uma abordagem diferente
 """
                         }
-        requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta3)
+        requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta)
 
 
 
-        #IDENTAÇÃO
-        if ultima_mensagem == "/Sim":
-            #
-            print("A etapa do sim deu certo e podemos continuar com e-mail")
+    #IDENTAÇÃO
+    elif ultima_mensagem == "/Sim":
+        #
+        print("A etapa do sim deu certo e podemos continuar com e-mail")
 
-            #CADASTRANDO A PAUTA NA PLANILHA
-            nome_usuario = primeira_mensagem["message"]["from"]["first_name"]
-            update_id = primeira_mensagem["update_id"]
-            chat_id = primeira_mensagem["message"]["chat"]["id"]
-            data_atual = datetime.now()
-            data_formatada = data_atual.strftime("%d/%m/%Y")
-            planilha.insert_row([data_formatada, update_id, nome_usuario, resposta_chatgpt], 2)
-
-            #PEGAR O E-MAIL
-            resposta = f"""
+        #PEGAR O E-MAIL
+        resposta = f"""
 Tudo bem, {nome_usuario}. Vamos finalizar a sessão e enviar a pauta para algum e-mail?
 Para isso, escreva o e-mail e o assunto do e-mail logo abaixo. Ambos separados por vírgula.
 
@@ -236,13 +236,10 @@ EXEMPLO: nome_alguem@gmail.com, Pauta sobre XXXXXXXXXXX
 FIQUE ATENTO: caso você não envie um e-mail válido e um assunto em menos de 3 minutos, retornarei à etapa anterior ou encerrarei a sessão.
 
 """
-            #ENVIA A MENSAGEM 02
-            #resposta4 = {"chat_id": chat_id, "text": desfecho1}
-            #requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta4)
+        #ENVIA A MENSAGEM 02
+        #resposta4 = {"chat_id": chat_id, "text": desfecho1}
+        #requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta4)
         
-
-    else:
-        return "Ok, não era um link"
     
     
     #ENVIA A MENSAGEM PARA O USUÁRIO
