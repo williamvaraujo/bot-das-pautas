@@ -161,7 +161,10 @@ Que tal tomar um café enquanto espera. Não precisa responder nada enquanto iss
 
         #VERIFICANDO A MENSAGEM COMO UM LINK E FORMATANDO PARA SER USADA NO CHATGPT
         assunto = ultima_mensagem
-
+        headers_chatgpt = {"Authorization": f"Bearer {token_chatgpt}", "content-type": "Application/json"}
+        link_chatgpt = "https://api.openai.com/v1/chat/completions"
+        id_modelo_chatgpt = "gpt-3.5-turbo"
+        
         corpo_mensagem = {
         "model": id_modelo_chatgpt,
         "messages": [{"role": "user", "content": f"""
@@ -181,9 +184,7 @@ A pauta precisa ter o seguinte formato:
 """
            }]}
         #CONFIGURANDO O ENVIO DO PROMPT PARA O CHATGPT
-        headers_chatgpt = {"Authorization": f"Bearer {token_chatgpt}", "content-type": "Application/json"}
-        link_chatgpt = "https://api.openai.com/v1/chat/completions"
-        id_modelo_chatgpt = "gpt-3.5-turbo"
+
         corpo_mensagem = json.dumps(corpo_mensagem)
         requisicao_chatgpt = requests.post(link_chatgpt, headers=headers_chatgpt, data=corpo_mensagem)
         print("Foi enviado o prompt ao ChatGPT")
@@ -238,7 +239,8 @@ FIQUE ATENTO: caso você não envie um e-mail válido e um assunto em menos de 3
             #ENVIA A MENSAGEM 02
             #resposta4 = {"chat_id": chat_id, "text": desfecho1}
             #requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta4)
-    
+    else:
+        return "Ok, não era um link"
     
     
     #ENVIA A MENSAGEM PARA O USUÁRIO
