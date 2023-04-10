@@ -291,9 +291,11 @@ Atenciosamente.
         #AQUI VAMOS CONFIGURAR A CONEXÃO SEGURA COM O SERVIDOR SMTP DE E-MAIL
         s = smtplib.SMTP("smtp.gmail.com:587")
         s.starttls()
-
+        
+        print("Chegamos até aqui no e-mail")
+        
         # Envio do e-mail
-        s.login(msg["From"], f"{senha_email}")
+        s.login(msg["From"], senha_email)
         s.sendmail(msg["From"], [msg["To"]], msg.as_string().encode("utf-8"))
         print("E-mail enviado")
 
