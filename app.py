@@ -23,10 +23,23 @@ token_telegram = "TELEGRAM_APY_TOKEN"
 
 #TOKEN GOOGLE SHEETS API #ARQUIVO OCULTO NA RAIZ
 
-token_google_sheets = os.environ['TOKEN_GOOGLE_SHEETS']
+GOOGLE_SHEETS_CREDENTIALS = os.environ['TOKEN_GOOGLE_SHEETS']
 with open("credenciais.json", mode="w") as fobj:
-  fobj.write(token_google_sheets)
+  fobj.write(GOOGLE_SHEETS_CREDENTIALS)
+id_da_planilha = 'ID_PLANILHA'   #ID_PLANILHA
+nome_da_pag = 'NOME_PLANILHA'    #NOME_PLANILHA
 
+scopes = [
+    'https://www.googleapis.com/auth/spreadsheets',
+    'https://www.googleapis.com/auth/drive'
+]
+
+gs_credenciais = ServiceAccountCredentials.from_json_keyfile_name("credenciais.json")
+cliente = gspread.authorize(gs_credenciais)
+  
+#ABRINDO A PLANILHA
+planilha = cliente.open_by_key(id_da_planilha).sheet1
+  
 #TOKEN_CHAT_GPT #TOKEN_CHATGPT
 token_chatgpt = 'TOKEN_CHATGPT'
 
@@ -38,22 +51,6 @@ senha_email = 'senha_email' #senha_email
 
 #FAZENDO A CONFIGURAÇÃO DOS CLIENTES DOS TOKENS
 
-#INSERINDO O ID DA PLANILHA (código que existe no url da Planilha) 
-id_da_planilha = 'ID_PLANILHA'   #ID_PLANILHA
-nome_da_pag = 'NOME_PLANILHA'    #NOME_PLANILHA
-
-#CRIANDO UM CLIENTE GSPREAD PARA ACESSAR A PLANILHA E MODIFICAR ELA QUANDO PRECISAR
-
-scopes = [
-    'https://www.googleapis.com/auth/spreadsheets',
-    'https://www.googleapis.com/auth/drive'
-]
-
-gs_credenciais = ServiceAccountCredentials.from_json_keyfile_name("credenciais.json")
-cliente = gspread.authorize(gs_credenciais)
-
-#ABRINDO A PLANILHA
-planilha = cliente.open_by_key(id_da_planilha).sheet1
 
 #AQUI, ESTAMOS CRIANDO UMA PEQUENA FUNÇÃO PARA IDENTIFICAR SE É UM LINK O QUE O USUÁRIO ENVIOU
 #Vamos usar ela na função cria_pautas, no segundo ELIF
