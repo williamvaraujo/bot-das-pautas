@@ -193,8 +193,7 @@ A pauta precisa ter o seguinte formato:
             resposta_chatgpt = retorno_chatgpt["choices"][0]["message"]["content"]
             time.sleep(30)
         
-        else:
-            break
+
         print(resposta_chatgpt)
                 
         
