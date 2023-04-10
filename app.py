@@ -217,7 +217,8 @@ A pauta precisa ter o seguinte formato:
         planilha.insert_row([data_formatada, update_id, nome_usuario, resposta_chatgpt], 2)
         
         #ENVIA A RESPOSTA AO TELEGRAM
-        resposta = {"chat_id": chat_id, "text": resposta_chatgpt+f"""
+        resposta = f"""{resposta_chatgpt}
+        
 *******************************************************
 
 {nome_usuario}, podemos continuar a partir dessa pauta?
@@ -229,10 +230,7 @@ Clique para responder:
 2 - /Nao, refaça com uma abordagem diferente
 """
                         }
-        requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta)
-
-
-
+        
     #IDENTAÇÃO
     elif ultima_mensagem == "/Sim":
         #
