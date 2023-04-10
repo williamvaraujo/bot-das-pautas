@@ -128,3 +128,35 @@ Será um prazer ajudar.
       #ENVIA A MENSAGEM01 PARA O USUÁRIO
       resposta1 = {"chat_id": chat_id, "text": orientacao}
       requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta1)
+    
+    #
+#---------------------------------------------------------------------------/CONTINUAR --> RESPOSTA2
+        
+    elif ultima_mensagem.startswith("/") and ultima_mensagem == '/continuar':
+        #      
+        nome_usuario = primeira_mensagem['message']['from']['first_name']
+        update_id = primeira_mensagem['update_id']
+        chat_id = primeira_mensagem['message']['chat']['id']      
+
+        #ORIENTAÇÕES PARA CONSTRUÇÃO DO ASSUNTO
+        assunto = f'''
+Vamos lá. 
+
+Por favor, insira abaixo um assunto, um link para contextualização e uma editoria para balizar o viés de abordagem da pauta.
+
+
+**************
+LEMBRE-SE: links são importantes para que eu seja atualizado sobre o assunto e apresente informações mais assertivas.
+Além disso, sempre aguarde o retorno, pois a construção da pauta pode demorar até 3 minutos.
+**************
+
+EXEMPLO: 
+Gostaria de obter uma pauta sobre o assunto: "XXXXXXX XXX XXXXXXXXXXXXX"
+Para balizar a abordagem e contexto, use o link: https://XXXX.XXXX.XXXX/XXXX como referência.
+A abordagem precisa ser direcionada para a editoria: ECONOMIA.
+
+OBSERVAÇÃO: quanto mais informação, mais assertiva a pauta. Por isso, seja claro sobre seus objetivos.
+    '''
+        #ENVIA A MENSAGEM 02
+        resposta2 = {"chat_id": chat_id, "text": assunto}
+        requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta2)
