@@ -99,7 +99,7 @@ id_modelo_chatgpt = 'gpt-3.5-turbo'
 #**Sempre buscaremos a última interação do usuário, por isso, o update_id e a mensagem serão as últimas do dicionário JSON. Serão [-1] para poderem ser os últimos.**
 
 offset = 0
-primeira_mensagem = requests.json  #get(f'https://api.telegram.org/bot{token_telegram}/getUpdates?offset={offset + 1}').json()['result']
+primeira_mensagem = request.json  #get(f'https://api.telegram.org/bot{token_telegram}/getUpdates?offset={offset + 1}').json()['result']
 print(primeira_mensagem)
 
 #--------------------------------------------------------------- INSERIR AQUI A FLASK
@@ -387,7 +387,7 @@ Para isso, clique em /continuar.
     
     
 #-------------------------------------------------- RODA O BOT
-primeira_mensagem = requests.json #get(f'https://api.telegram.org/bot{token_telegram}/getUpdates?offset={offset + 1}').json()['result']
+primeira_mensagem = request.json #get(f'https://api.telegram.org/bot{token_telegram}/getUpdates?offset={offset + 1}').json()['result']
 nome_usuario = primeira_mensagem[-1]['message']['from']['first_name']
 update_id = primeira_mensagem[-1]['update_id']
 ultima_mensagem = primeira_mensagem[-1]['message']['text']
