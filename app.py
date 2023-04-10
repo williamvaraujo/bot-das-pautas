@@ -40,7 +40,7 @@ cliente = gspread.authorize(gs_credenciais)
 planilha = cliente.open_by_key(id_da_planilha).sheet1
   
 #TOKEN_CHAT_GPT #TOKEN_CHATGPT
-token_chatgpt = "TOKEN_CHATGPT"
+token_chatgpt = os.environ["TOKEN_CHATGPT"]
 headers_chatgpt = {"Authorization": f"Bearer {token_chatgpt}", "content-type": "Application/json"}
 link_chatgpt = "https://api.openai.com/v1/chat/completions"
 id_modelo_chatgpt = "gpt-3.5-turbo"
