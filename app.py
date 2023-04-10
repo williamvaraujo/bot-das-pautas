@@ -99,9 +99,9 @@ app = Flask(__name__)
 def bot_das_pautas():
     #
     primeira_mensagem = request.json
-    ultima_mensagem = update["message"]["text"]
-    chat_id = update["message"]["chat"]["id"]
-    nome_usuario = update["message"]["from"]["first_name"]  
+    ultima_mensagem = primeira_mensagem["message"]["text"]
+    chat_id = primeira_mensagem["message"]["chat"]["id"]
+    nome_usuario = primeira_mensagem["message"]["from"]["first_name"]  
     print(primeira_mensagem)
     print(message)
     print(chat_id)
