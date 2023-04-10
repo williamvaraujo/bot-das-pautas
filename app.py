@@ -198,10 +198,10 @@ A pauta precisa ter o seguinte formato:
         
         resposta_chatgpt = None
             
-            while not resposta_chatgpt:
-                retorno_chatgpt = requisicao_chatgpt.json()
-                resposta_chatgpt = retorno_chatgpt["choices"][0]["message"]["content"]
-                time.sleep(120)
+        while not resposta_chatgpt:
+            retorno_chatgpt = requisicao_chatgpt.json()
+            resposta_chatgpt = retorno_chatgpt["choices"][0]["message"]["content"]
+            time.sleep(120)
                 
         print(resposta_chatgpt)
                 
@@ -226,7 +226,7 @@ Clique para responder:
 1 - /Sim, vamos para a próxima etapa.
 2 - /Nao, refaça com uma abordagem diferente
 """
-    
+
     
     
     
