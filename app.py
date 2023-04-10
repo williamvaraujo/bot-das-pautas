@@ -50,27 +50,6 @@ email = "email" #email
 senha_email = "senha_email" #senha_email
 #-----------------------------------------------------------------
 
-#resolvendo o tempo do gunicorn
-
-from gunicorn.app.base import BaseApplication
-from gunicorn.six import iteritems
-
-class GunicornApp(BaseApplication):
-
-    def __init__(self, app, options=None):
-        self.options = options or {}
-        self.application = app
-        super().__init__()
-
-    def load_config(self):
-        config = {key: value for key, value in iteritems(self.options) if key in self.cfg.settings and value is not None}
-        for key, value in iteritems(config):
-            self.cfg.set(key.lower(), value)
-
-    def load(self):
-        return self.application
-
-
 
 
 #################################################################
@@ -119,16 +98,6 @@ def dividir_texto(texto):
 #FUNÇÃO DE FUNCIONAMENTO DO BOT
 
 app = Flask(__name__)
-
-gunicorn_options = {
-    'bind': '0.0.0.0:5000',
-    'workers': 2,
-    'timeout': 300, # segundos
-}
-
-gunicorn_app = GunicornApp(app, gunicorn_options)
-gunicorn_app.run()
-
 @app.route("/bot-das-pautas", methods=["POST"])
 def bot_das_pautas():
     #
