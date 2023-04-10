@@ -106,11 +106,11 @@ offset = 0
 #FUNÇÃO DE FUNCIONAMENTO DO BOT
 
 def cria_pautas(mensagem):
-    ultima_mensagem = mensagem[-1]['message']['text']
+    ultima_mensagem = mensagem['message']['text']    #[-1]['message']['text']
 
 #---------------------------------------------------------------------------- /START --> RESPOSTA1
     if  ultima_mensagem.startswith("/") and ultima_mensagem == '/start':
-        nome_usuario = mensagem[-1]['message']['from']['first_name']
+        nome_usuario = mensagem['message']['from']['first_name']
         update_id = mensagem[-1]['update_id']
         #data_hora = mensagem[-1]['date']
         #texto_da_mensagem = mensagem[-1]['message']['text']
@@ -389,7 +389,7 @@ app = Flask(__name__)
 
 def bot_das_pautas():
     
-    primeira_mensagem = requests.get(f'https://api.telegram.org/bot{token_telegram}/getUpdates?offset={offset + 1}').json()['result']
+    primeira_mensagem = request.json #.get(f'https://api.telegram.org/bot{token_telegram}/getUpdates?offset={offset + 1}').json()['result']
     #nome_usuario = primeira_mensagem[-1]['message']['from']['first_name']
     #update_id = primeira_mensagem[-1]['update_id']
     #ultima_mensagem = primeira_mensagem[-1]['message']['text']
