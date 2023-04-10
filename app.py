@@ -201,7 +201,7 @@ A pauta precisa ter o seguinte formato:
         requisicao_chatgpt = requests.post(link_chatgpt, headers=headers_chatgpt, data=corpo_mensagem)
         print("Foi enviado o prompt ao ChatGPT")
         
-        #time.sleep(200)
+        time.sleep(200)
         
         #CONFIGURANDO O ENVIO DA RESPOSTA DO CHATGPT PARA SER REPASSADA AO TELEGRAM
         retorno_chatgpt = requisicao_chatgpt.json()
