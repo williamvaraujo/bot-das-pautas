@@ -240,8 +240,7 @@ FIQUE ATENTO: caso você não envie um e-mail válido e um assunto em menos de 3
             #resposta4 = {"chat_id": chat_id, "text": desfecho1}
             #requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta4)
         
-        else:
-            continue
+
     else:
         return "Ok, não era um link"
     
