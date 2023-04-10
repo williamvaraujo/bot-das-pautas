@@ -26,7 +26,7 @@ token_telegram = "TELEGRAM_APY_TOKEN"
 GOOGLE_SHEETS_CREDENTIALS = os.environ['GOOGLE_SHEETS_CREDENTIALS']
 with open("credenciais.json", mode="w") as fobj:
   fobj.write(GOOGLE_SHEETS_CREDENTIALS)
-id_da_planilha = 'ID_PLANILHA'   #ID_PLANILHA
+id_da_planilha = '1JMO_CCRtR7y2ntpYNZixc2Ma3e7VbtMj31zb7ymJc8c'   #ID_PLANILHA
 nome_da_pag = 'NOME_PLANILHA'    #NOME_PLANILHA
 
 scopes = [
