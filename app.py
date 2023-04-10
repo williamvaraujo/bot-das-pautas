@@ -40,7 +40,7 @@ cliente = gspread.authorize(gs_credenciais)
 planilha = cliente.open_by_key(id_da_planilha).sheet1
   
 #TOKEN_CHAT_GPT #TOKEN_CHATGPT
-token_chatgpt = ["TOKEN_CHATGPT"]
+token_chatgpt = "TOKEN_CHATGPT"
 headers_chatgpt = {"Authorization": f"Bearer {token_chatgpt}", "content-type": "Application/json"}
 link_chatgpt = "https://api.openai.com/v1/chat/completions"
 id_modelo_chatgpt = "gpt-3.5-turbo"
@@ -182,6 +182,8 @@ A pauta precisa ter o seguinte formato:
         corpo_mensagem = json.dumps(corpo_mensagem)
         requisicao_chatgpt = requests.post(link_chatgpt, headers=headers_chatgpt, data=corpo_mensagem)
         teste = requisicao_chatgpt.json()
+        print(f"Status code: {requisicao_chatgpt.status_code}")
+        print(f"Resposta: {requisicao_chatgpt.text}")
         print(teste)
         print("Foi enviado o prompt ao ChatGPT")
         
@@ -193,8 +195,7 @@ A pauta precisa ter o seguinte formato:
             retorno_chatgpt = requisicao_chatgpt.json()
             resposta_chatgpt = retorno_chatgpt["choices"][0]["message"]["content"]
             time.sleep(5)
-            print(f"Status code: {requisicao_chatgpt.status_code}")
-            print(f"Resposta: {requisicao_chatgpt.text}")
+
         
             print(resposta_chatgpt)
         print("Passou pelo While")        
