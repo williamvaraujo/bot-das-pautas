@@ -98,9 +98,9 @@ app = Flask(__name__)
 def bot_das_pautas():
     #
     primeira_mensagem = request.json
-    ultima_mensagem = mensagem['message']['text']
+    ultima_mensagem = primeira_mensagem['message']['text']
     chat_id = primeira_mensagem['message']['chat']['id']
-    nome_usuario = mensagem['message']['from']['first_name']
+    nome_usuario = primeira_mensagem['message']['from']['first_name']
 #---------------------------------------------------------------------------- /START --> RESPOSTA1
     if  ultima_mensagem.startswith("/") and ultima_mensagem == '/start':
         #MENSAGEM DE BOAS-VINDAS E ORIENTAÇÃO
