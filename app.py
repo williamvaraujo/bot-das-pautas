@@ -229,7 +229,7 @@ Clique para responder:
 1 - /Sim, vamos para a próxima etapa.
 2 - /Nao, refaça com uma abordagem diferente
 """
-                        }
+    
         
     #IDENTAÇÃO
     elif ultima_mensagem == "/Sim":
