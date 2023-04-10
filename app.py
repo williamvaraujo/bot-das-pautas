@@ -106,7 +106,7 @@ async def enviar_mensagem(link_chatgpt, headers_chatgpt, corpo_mensagem):
 
 app = Flask(__name__)
 @app.route("/bot-das-pautas", methods=["POST"])
-def bot_das_pautas():
+async def bot_das_pautas():
     #
     primeira_mensagem = request.json
     ultima_mensagem = primeira_mensagem["message"]["text"]
