@@ -50,6 +50,9 @@ email = "email" #email
 senha_email = "senha_email" #senha_email
 #-----------------------------------------------------------------
 
+from app import app
+
+os.environ['TIMEOUT'] = '300'
 
 
 #################################################################
