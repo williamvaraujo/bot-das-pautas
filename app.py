@@ -149,7 +149,7 @@ OBSERVAÇÃO: quanto mais informação, mais assertiva a pauta. Por isso, seja c
     """
     
   
-        #ENVIA A MENSAGEM PARA O USUÁRIO
-        novo_texto = {"chat_id": chat_id, "text": resposta}
-        requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=novo_texto)
+    #ENVIA A MENSAGEM PARA O USUÁRIO
+    novo_texto = {"chat_id": chat_id, "text": resposta}
+    requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=novo_texto)
     return "Ok"
