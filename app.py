@@ -187,7 +187,7 @@ A pauta precisa ter o seguinte formato:
         
         resposta_chatgpt = None
             
-        while resposta_chatgpt = None:
+        while not resposta_chatgpt:
             retorno_chatgpt = requisicao_chatgpt.json()
             resposta_chatgpt = retorno_chatgpt["choices"][0]["message"]["content"]
             time.sleep(5)
