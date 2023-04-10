@@ -99,8 +99,8 @@ id_modelo_chatgpt = 'gpt-3.5-turbo'
 #**Sempre buscaremos a última interação do usuário, por isso, o update_id e a mensagem serão as últimas do dicionário JSON. Serão [-1] para poderem ser os últimos.**
 
 offset = 0
-primeira_mensagem = requests.get(f'https://api.telegram.org/bot{token_telegram}/getUpdates?offset={offset + 1}').json()['result']
-print(primeira_mensagem)
+#primeira_mensagem = requests.get(f'https://api.telegram.org/bot{token_telegram}/getUpdates?offset={offset + 1}').json()['result']
+#print(primeira_mensagem)
 
 #--------------------------------------------------------------- INSERIR AQUI A FLASK
 app = Flask(__name__)
