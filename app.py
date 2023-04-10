@@ -91,7 +91,7 @@ offset = 0
 #FUNÇÃO DE FUNCIONAMENTO DO BOT
 
 app = Flask(__name__)
-@app.route("/bot-das-pautas", methods=['GET','POST'])
+@app.route("/bot-das-pautas", methods=['POST'])
 def bot_das_pautas():
     #
     primeira_mensagem = request.json
