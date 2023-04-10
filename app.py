@@ -1,6 +1,7 @@
 #IMPORTAR AS BIBLIOTECAS NECESSÁRIAS
 
-from flask import Flask, request
+#from flask import Flask, request
+from aioflask import Flask, request, Response
 import requests
 import gspread
 import json
