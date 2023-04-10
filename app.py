@@ -18,7 +18,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 #ACESSANDO OS TOKENS
 
 #TOKEN TELEGRAM #TELEGRAM_APY_TOKEN
-token_telegram = os.environ["TELEGRAM_APY_KEY"]
+token_telegram = "TELEGRAM_APY_KEY"
 
 
 #TOKEN GOOGLE SHEETS API #ARQUIVO OCULTO NA RAIZ
