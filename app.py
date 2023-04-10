@@ -23,7 +23,7 @@ token_telegram = "TELEGRAM_APY_TOKEN"
 
 #TOKEN GOOGLE SHEETS API #ARQUIVO OCULTO NA RAIZ
 
-GOOGLE_SHEETS_CREDENTIALS = os.environ['TOKEN_GOOGLE_SHEETS']
+GOOGLE_SHEETS_CREDENTIALS = os.environ['GOOGLE_SHEETS_CREDENTIALS']
 with open("credenciais.json", mode="w") as fobj:
   fobj.write(GOOGLE_SHEETS_CREDENTIALS)
 id_da_planilha = 'ID_PLANILHA'   #ID_PLANILHA
