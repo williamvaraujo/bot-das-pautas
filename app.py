@@ -388,7 +388,7 @@ Muito obrigado.
 
 
 
-    return ultima_mensagem
+    return "Bot funcionando"
     
     
 #-------------------------------------------------- RODA O BOT
