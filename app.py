@@ -214,8 +214,6 @@ A pauta precisa ter o seguinte formato:
 
 {nome_usuario}, podemos continuar a partir dessa pauta?
 
-Darei cerca de dois minutos para responder.
-
 Clique para responder:
 1 - /Sim, vamos para a próxima etapa.
 2 - /Nao, refaça com uma abordagem diferente
@@ -252,7 +250,71 @@ Para isso, clique em /continuar.
 
 """
     
-    
+#------------------------------------------------------------------------/e-mail
+
+    #
+    elif "@" in ultima_mensagem:
+        #
+        print('Sim, tem um e-mail e um assunto, então serve para continuarmos')
+
+        pauta_pronta = planilha.cell(2, 4).value
+        corpo_email = f"""
+Olá, tudo bem? Espero que sim.
+Segue abaixo uma pauta para trabalho
+********************************
+
+{pauta_pronta}
+
+
+********************************
+
+Atenciosamente.
+Fico à disposição para esclarecer dúvidas.
+
+"""
+
+        #CONSTRUIR E-MAIL E ENVIAR
+        email = f"{ultima_mensagem}"
+        destinatario = f"{email}"
+        assunto_do_email = f"Nova sugestão de pauta enviada por {nome_usuario}"
+        print(destinatario)
+        print(assunto_do_email)
+
+        # Configuração do destinatário, assunto e corpo do e-mail
+        msg = EmailMessage()
+        msg["Subject"] = f"{assunto_do_email}"
+        msg["From"] = f"{email}"
+        msg["To"] = f"{destinatario}"
+        msg.add_header("Content-Type','text/html")
+        #msg.set_payload(corpo_email)
+        msg.set_content(corpo_email)
+
+        #AQUI VAMOS CONFIGURAR A CONEXÃO SEGURA COM O SERVIDOR SMTP DE E-MAIL
+        s = smtplib.SMTP("smtp.gmail.com: 587")
+        s.starttls()
+
+        # Envio do e-mail
+        s.login(msg["From"], senha_email)
+        s.sendmail(msg["From"], [msg["To"]], msg.as_string().encode("utf-8"))
+        print("E-mail enviado")
+
+        #MENSAGEM 05
+        resposta = f"""
+E-mail da pauta enviado com sucesso,{nome_usuario}.
+
+Para trabalharmos com outra pauta, por favor, clique em:
+
+/start
+
+************
+OBSERVAÇÃO: Sempre que quiser trabalhar uma nova pauta, por favor, digite e envie "/start" (sem aspas) ou clique em /start.
+"""
+
+
+
+
+
+#------------------------------------------------------------------------/fim
     
     
     #ENVIA A MENSAGEM PARA O USUÁRIO
