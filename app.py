@@ -19,7 +19,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 #ACESSANDO OS TOKENS
 
 #TOKEN TELEGRAM #TELEGRAM_APY_TOKEN
-token_telegram = "TELEGRAM_APY_KEY"
+token_telegram = os.environ["TELEGRAM_APY_KEY"]
 
 
 #TOKEN GOOGLE SHEETS API #ARQUIVO OCULTO NA RAIZ
@@ -85,7 +85,7 @@ id_modelo_chatgpt = 'gpt-3.5-turbo'
 #OBSERVAÇÃO: Este offset não tem o mesmo significado do OFFSET presente nos dados da mensagem. Este offset representa o UPDATE_ID;
 #**Sempre buscaremos a última interação do usuário, por isso, o update_id e a mensagem serão as últimas do dicionário JSON. Serão [-1] para poderem ser os últimos.**
 
-offset = 0
+#offset = 0
 ##############################################################################################################################
 ##############################################################################################################################
 
@@ -101,7 +101,7 @@ cache = Cache(app, config={'CACHE_TYPE': 'null'})
 def bot_das_pautas():
     #['message']['chat']['id']['-1']['text']
     primeira_mensagem = request.json
-    ultima_mensagem = primeira_mensagem['message']['chat']['id']['-1']['text']
+    ultima_mensagem = primeira_mensagem["message"]["chat"]["id"]
     chat_id = primeira_mensagem["message"]["chat"]["id"]
     nome_usuario = primeira_mensagem["message"]["from"]["first_name"]  
     print(primeira_mensagem)
