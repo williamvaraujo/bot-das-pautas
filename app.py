@@ -107,16 +107,18 @@ offset = 0
 #FUNÇÃO DE FUNCIONAMENTO DO BOT
 
 def cria_pautas(mensagem):
-    primeira_mensagem = request.json
-    ultima_mensagem = mensagem['message']['text']
-    chat_id = primeira_mensagem['message']['chat']['id']
+  
+  primeira_mensagem = request.json
+  ultima_mensagem = mensagem['message']['text']
+  chat_id = primeira_mensagem['message']['chat']['id']
 #---------------------------------------------------------------------------- /START --> RESPOSTA1
-    if  ultima_mensagem.startswith("/") and ultima_mensagem == '/start':
-        nome_usuario = mensagem['message']['from']['first_name']
-        update_id = mensagem['update_id']
-        chat_id = primeira_mensagem['message']['chat']['id']
-        #MENSAGEM DE BOAS-VINDAS E ORIENTAÇÃO
-        orientacao = f'''
+  if  ultima_mensagem.startswith("/") and ultima_mensagem == '/start':
+    
+    nome_usuario = mensagem['message']['from']['first_name']
+    update_id = mensagem['update_id']
+    chat_id = primeira_mensagem['message']['chat']['id']
+    #MENSAGEM DE BOAS-VINDAS E ORIENTAÇÃO
+    orientacao = f'''
 Olá, {nome_usuario}, tudo bem?
 
 Antes de continuar, preciso que fique atento ao modo de uso da ferramenta:
@@ -132,25 +134,25 @@ Antes de continuar, preciso que fique atento ao modo de uso da ferramenta:
 
 *************************
 Para continuarmos, clique no link a seguir: /continuar.
-        
+
 Será um prazer ajudar.
-        '''
-        
-        #ENVIA A MENSAGEM01 PARA O USUÁRIO
-        resposta1 = {"chat_id": chat_id, "text": orientacao}
-        requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta1)
-        
-        time.sleep(10)
-        
+    '''
+
+    #ENVIA A MENSAGEM01 PARA O USUÁRIO
+    resposta1 = {"chat_id": chat_id, "text": orientacao}
+    requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta1)
+
+
 #---------------------------------------------------------------------------/CONTINUAR --> RESPOSTA2
         
-    if ultima_mensagem.startswith("/") and ultima_mensagem == '/continuar':
-        nome_usuario = mensagem['message']['from']['first_name']
-        update_id = mensagem['update_id']
-        chat_id = primeira_mensagem['message']['chat']['id']      
-      
-        #ORIENTAÇÕES PARA CONSTRUÇÃO DO ASSUNTO
-        assunto = f'''
+  if ultima_mensagem.startswith("/") and ultima_mensagem == '/continuar':
+    #      
+    nome_usuario = mensagem['message']['from']['first_name']
+    update_id = mensagem['update_id']
+    chat_id = primeira_mensagem['message']['chat']['id']      
+
+    #ORIENTAÇÕES PARA CONSTRUÇÃO DO ASSUNTO
+    assunto = f'''
 Vamos lá. 
 
 Por favor, insira abaixo um assunto, um link para contextualização e uma editoria para balizar o viés de abordagem da pauta.
@@ -168,37 +170,37 @@ A abordagem precisa ser direcionada para a editoria: ECONOMIA.
 
 OBSERVAÇÃO: quanto mais informação, mais assertiva a pauta. Por isso, seja claro sobre seus objetivos.
 '''
-        #ENVIA A MENSAGEM 02
-        resposta2 = {"chat_id": chat_id, "text": assunto}
-        requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta2)        
-        
-        #---------------------------------------- INSERÇÃO DA PAUTA --> RESPOSTA3 --> RESPOSTA4 --> RESPOSTA5
+    #ENVIA A MENSAGEM 02
+    resposta2 = {"chat_id": chat_id, "text": assunto}
+    requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta2)        
 
-        if not ultima_mensagem.startswith("/"):
+    #---------------------------------------- INSERÇÃO DA PAUTA --> RESPOSTA3 --> RESPOSTA4 --> RESPOSTA5
 
-            nome_usuario = mensagem['message']['from']['first_name']
-            update_id = mensagem['update_id']
-            chat_id = primeira_mensagem['message']['chat']['id']
-            print('É um assunto com link e chegou no CHATGPT***********')
+    if not ultima_mensagem.startswith("/"):
+      #
+      nome_usuario = mensagem['message']['from']['first_name']
+      update_id = mensagem['update_id']
+      chat_id = primeira_mensagem['message']['chat']['id']
+      print('É um assunto com link e chegou no CHATGPT***********')
 
-            recebido = f'''
+      recebido = f'''
 
 Ok. Recebi a pauta. Agora é só esperar.
 Posso demorar cerca de 5 minutos.
 Que tal tomar um café enquanto espera. Não precisa responder nada enquanto isso.'''
 
-            #ENVIA O ENCERRAMENTO
-            retorno_pauta = {"chat_id": chat_id, "text": recebido}
-            requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=retorno_pauta)  
+      #ENVIA O ENCERRAMENTO
+      retorno_pauta = {"chat_id": chat_id, "text": recebido}
+      requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=retorno_pauta)  
 
 
 
-            #VERIFICANDO A MENSAGEM COMO UM LINK E FORMATANDO PARA SER USADA NO CHATGPT
-            assunto = ultima_mensagem
+      #VERIFICANDO A MENSAGEM COMO UM LINK E FORMATANDO PARA SER USADA NO CHATGPT
+      assunto = ultima_mensagem
 
-            corpo_mensagem = {
-            'model': id_modelo_chatgpt,
-            'messages': [{'role': 'user', 'content': f'''
+      corpo_mensagem = {
+      'model': id_modelo_chatgpt,
+      'messages': [{'role': 'user', 'content': f'''
 
 Olá, gostaria de trabalhar com você para que construa uma pauta jornalística. Por isso, peço que entre em um modo que familiarizado com 
 o jornalismo brasileiro.
@@ -215,22 +217,22 @@ A pauta precisa ter o seguinte formato:
 6 - Sugira ao menos cinco perguntas com base no assunto e editoria que foi enviada. Este tópico será chamado PERGUNTAS DE SUGESTÃO;
 7 - Indique quais secretarias do governo Federal, Estadual ou Municipal brasileiro que podem ajudar no assunto. Explique porque buscar essa fonte oficial é importante e qual a função dela. Este tópico será chamado FONTES OFICIAIS.
 '''
-                 }]}
+           }]}
 
-            #CONFIGURANDO O ENVIO DO PROMPT PARA O CHATGPT
-            corpo_mensagem = json.dumps(corpo_mensagem)
-            requisicao_chatgpt = requests.post(link_chatgpt, headers=headers_chatgpt, data=corpo_mensagem)
-            print (corpo_mensagem)
+      #CONFIGURANDO O ENVIO DO PROMPT PARA O CHATGPT
+      corpo_mensagem = json.dumps(corpo_mensagem)
+      requisicao_chatgpt = requests.post(link_chatgpt, headers=headers_chatgpt, data=corpo_mensagem)
+      print (corpo_mensagem)
 
-            #CONFIGURANDO O ENVIO DA RESPOSTA DO CHATGPT PARA SER REPASSADA AO TELEGRAM
-            retorno_chatgpt = requisicao_chatgpt.json()
-            resposta_chatgpt = retorno_chatgpt['choices'][0]['message']['content']
-            print(resposta_chatgpt)
+      #CONFIGURANDO O ENVIO DA RESPOSTA DO CHATGPT PARA SER REPASSADA AO TELEGRAM
+      retorno_chatgpt = requisicao_chatgpt.json()
+      resposta_chatgpt = retorno_chatgpt['choices'][0]['message']['content']
+      print(resposta_chatgpt)
 
-            #ENVIA A RESPOSTA AO TELEGRAM
-            nome_usuario = mensagem['message']['from']['first_name']
-            update_id = mensagem['update_id']
-            resposta3 = {"chat_id": chat_id, "text": resposta_chatgpt+f'''
+      #ENVIA A RESPOSTA AO TELEGRAM
+      nome_usuario = mensagem['message']['from']['first_name']
+      update_id = mensagem['update_id']
+      resposta3 = {"chat_id": chat_id, "text": resposta_chatgpt+f'''
 
 *******************************************************
 
@@ -242,28 +244,28 @@ Clique para responder:
 1 - /Sim, vamos para a próxima etapa.
 2 - /Nao, refaça com uma abordagem diferente
 '''
-                }
-            requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta3)
+          }
+      requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta3)
 
-                #IDENTAÇÃO
-            if ultima_mensagem.startswith("/") and ultima_mensagem == '/Sim':
+          #IDENTAÇÃO
+      if ultima_mensagem.startswith("/") and ultima_mensagem == '/Sim':
+        #
+        nome_usuario = mensagem['message']['from']['first_name']
+        update_id = mensagem['update_id']
+        chat_id = primeira_mensagem['message']['chat']['id']
 
-                nome_usuario = mensagem['message']['from']['first_name']
-                update_id = mensagem['update_id']
-                chat_id = primeira_mensagem['message']['chat']['id']
-                
-                print('A etapa do sim deu certo e podemos continuar com e-mail')
+        print('A etapa do sim deu certo e podemos continuar com e-mail')
 
-                #CADASTRANDO A PAUTA NA PLANILHA
-                nome_usuario = primeira_mensagem['message']['from']['first_name']
-                update_id_novo = primeira_mensagem['update_id']
-                data_atual = datetime.now()
-                data_formatada = data_atual.strftime('%d/%m/%Y')
-                planilha.insert_row([data_formatada, update_id, nome_usuario, resposta_chatgpt], 2)
+        #CADASTRANDO A PAUTA NA PLANILHA
+        nome_usuario = primeira_mensagem['message']['from']['first_name']
+        update_id_novo = primeira_mensagem['update_id']
+        data_atual = datetime.now()
+        data_formatada = data_atual.strftime('%d/%m/%Y')
+        planilha.insert_row([data_formatada, update_id, nome_usuario, resposta_chatgpt], 2)
 
 
-                #PEGAR O E-MAIL
-                desfecho1 = f'''
+        #PEGAR O E-MAIL
+        desfecho1 = f'''
 Tudo bem, {nome_usuario}. Vamos finalizar a sessão e enviar a pauta para algum e-mail?
 Para isso, escreva o e-mail e o assunto do e-mail logo abaixo. Ambos separados por vírgula.
 
@@ -272,23 +274,23 @@ EXEMPLO: nome_alguem@gmail.com, Pauta sobre XXXXXXXXXXX
 FIQUE ATENTO: caso você não envie um e-mail válido e um assunto em menos de 3 minutos, retornarei à etapa anterior ou encerrarei a sessão.
 
 '''
-                #ENVIA A MENSAGEM 02
-                resposta4 = {"chat_id": chat_id, "text": desfecho1}
-                requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta4)  
+        #ENVIA A MENSAGEM 02
+        resposta4 = {"chat_id": chat_id, "text": desfecho1}
+        requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta4)  
 
-                if parse_email_subject(ultima_mensagem):
-                    
-                    nome_usuario = mensagem['message']['from']['first_name']
-                    update_id = mensagem['update_id']
-                    chat_id = primeira_mensagem['message']['chat']['id']
+        if parse_email_subject(ultima_mensagem):
+          #
+          nome_usuario = mensagem['message']['from']['first_name']
+          update_id = mensagem['update_id']
+          chat_id = primeira_mensagem['message']['chat']['id']
 
-                    print('Sim, tem um e-mail e um assunto, então serve para continuarmos')
+          print('Sim, tem um e-mail e um assunto, então serve para continuarmos')
 
-                    pauta_pronta = planilha.cell(2, 4).value
-                    #print("Valor da célula B2:", pauta_pronta)
+          pauta_pronta = planilha.cell(2, 4).value
+          #print("Valor da célula B2:", pauta_pronta)
 
 
-                    corpo_email = f'''
+          corpo_email = f'''
 Olá, tudo bem? Espero que sim.
 Segue abaixo uma pauta para trabalho
 ********************************
@@ -303,36 +305,36 @@ Fico à disposição para esclarecer dúvidas.
 
 '''
 
-                    #CONSTRUIR E-MAIL E ENVIAR
+          #CONSTRUIR E-MAIL E ENVIAR
 
-                    partes = ultima_mensagem.split(', ')
-                    destinatario = partes[0]
-                    assunto_do_email = partes[1]
-                    print(destinatario)
-                    print(assunto_do_email)
+          partes = ultima_mensagem.split(', ')
+          destinatario = partes[0]
+          assunto_do_email = partes[1]
+          print(destinatario)
+          print(assunto_do_email)
 
-                    # Configuração do destinatário, assunto e corpo do e-mail
-                    msg = EmailMessage()
-                    msg['Subject'] = f'{assunto_do_email}'
-                    msg['From'] = f'{email}'
-                    msg['To'] = f'{destinatario}'
-                    msg.add_header('Content-Type','text/html')
-                    #msg.set_payload(corpo_email)
-                    msg.set_content(corpo_email)
+          # Configuração do destinatário, assunto e corpo do e-mail
+          msg = EmailMessage()
+          msg['Subject'] = f'{assunto_do_email}'
+          msg['From'] = f'{email}'
+          msg['To'] = f'{destinatario}'
+          msg.add_header('Content-Type','text/html')
+          #msg.set_payload(corpo_email)
+          msg.set_content(corpo_email)
 
-                    #AQUI VAMOS CONFIGURAR A CONEXÃO SEGURA COM O SERVIDOR SMTP DE E-MAIL
-                    s = smtplib.SMTP('smtp.gmail.com: 587')
-                    s.starttls()
+          #AQUI VAMOS CONFIGURAR A CONEXÃO SEGURA COM O SERVIDOR SMTP DE E-MAIL
+          s = smtplib.SMTP('smtp.gmail.com: 587')
+          s.starttls()
 
-                    # Envio do e-mail
-                    s.login(msg['From'], senha_email)
-                    s.sendmail(msg['From'], [msg['To']], msg.as_string().encode('utf-8'))
-                    print('E-mail enviado')
+          # Envio do e-mail
+          s.login(msg['From'], senha_email)
+          s.sendmail(msg['From'], [msg['To']], msg.as_string().encode('utf-8'))
+          print('E-mail enviado')
 
-                    nome_usuario = primeira_mensagem['message']['from']['first_name']
+          nome_usuario = primeira_mensagem['message']['from']['first_name']
 
-                    #MENSAGEM 05
-                    enviado = f'''
+          #MENSAGEM 05
+          enviado = f'''
 E-mail da pauta enviado com sucesso,{nome_usuario}.
 
 Para trabalharmos com outra pauta, por favor, clique em:
@@ -342,20 +344,20 @@ Para trabalharmos com outra pauta, por favor, clique em:
 ************
 OBSERVAÇÃO: Sempre que quiser trabalhar uma nova pauta, por favor, digite e envie "/start" (sem aspas) ou clique em /start.
 '''
-                    #ENVIA A MENSAGEM 05
-                    resposta5 = {"chat_id": chat_id, "text": enviado}
-                    requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta5)
+          #ENVIA A MENSAGEM 05
+          resposta5 = {"chat_id": chat_id, "text": enviado}
+          requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta5)
 
 
 ############################IDENTAÇÃO DAS NEGATIVAS--------------------------------------------- /NÃO
-            elif ultima_mensagem.startswith("/") and ultima_mensagem == '/Nao':
-                print('a pauta não serviu, vamos refazer')
-                nome_usuario = mensagem['message']['from']['first_name']
-                update_id = mensagem['update_id']
-                chat_id = primeira_mensagem['message']['chat']['id']
-        
-                #MENSAGEM 04
-                abordagem2 = f'''
+          elif ultima_mensagem.startswith("/") and ultima_mensagem == '/Nao':
+              print('a pauta não serviu, vamos refazer')
+              nome_usuario = mensagem['message']['from']['first_name']
+              update_id = mensagem['update_id']
+              chat_id = primeira_mensagem['message']['chat']['id']
+
+              #MENSAGEM 04
+              abordagem2 = f'''
 Tudo bem, {nome_usuario}.
 Desculpe pelo erro.
 Vamos refazer a pauta.
@@ -363,41 +365,43 @@ Vamos refazer a pauta.
 Para isso, clique em /continuar.
 
 '''
-                #ENVIA A MENSAGEM 02
-                resposta5 = {"chat_id": chat_id, "text": abordagem2}
-                requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta5)
+              #ENVIA A MENSAGEM 02
+              resposta5 = {"chat_id": chat_id, "text": abordagem2}
+              requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=resposta5)
 
 
-                if ultima_mensagem == '/continuar':
-                    
-                    nome_usuario = mensagem['message']['from']['first_name']
-                    update_id = mensagem['update_id']
-                    chat_id = primeira_mensagem['message']['chat']['id']
-        
-                    print('A última mensagem é esta')
-                    print(ultima_mensagem)
+              if ultima_mensagem == '/continuar':
+
+                  nome_usuario = mensagem['message']['from']['first_name']
+                  update_id = mensagem['update_id']
+                  chat_id = primeira_mensagem['message']['chat']['id']
+
+                  print('A última mensagem é esta')
+                  print(ultima_mensagem)
 
             #IDENTAÇÃO DE FIM
-    else:
-        nome_usuario = mensagem['message']['from']['first_name']
-        update_id = mensagem['update_id']
-        chat_id = primeira_mensagem['message']['chat']['id']
+  #
+  else:
+    #
+    nome_usuario = mensagem['message']['from']['first_name']
+    update_id = mensagem['update_id']
+    chat_id = primeira_mensagem['message']['chat']['id']
 
-        #ENCERRAR ATENDIMENTO
-        encerrar = f'''
+    #ENCERRAR ATENDIMENTO
+    encerrar = f'''
 Desculpe, {nome_usuario}.
 Precisaremos encerrar o atendimento.
 Para recomeçar,  clique em /start.
 
 Muito obrigado.
 '''
-        #ENVIA O ENCERRAMENTO
-        finalizar = {"chat_id": chat_id, "text": encerrar}
-        requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=finalizar)  
+    #ENVIA O ENCERRAMENTO
+    finalizar = {"chat_id": chat_id, "text": encerrar}
+    requests.post(f"https://api.telegram.org./bot{token_telegram}/sendMessage", data=finalizar)  
 
 
 
-    return print(f'Bot rodou, mas a mensagem foi {mensagem}')
+  return print(f'Bot rodou, mas a mensagem foi {mensagem}')
 
 #--------------------------------------------------------------- INSERIR AQUI A FLASK
 app = Flask(__name__)
